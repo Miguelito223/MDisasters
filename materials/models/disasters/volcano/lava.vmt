@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/disasters/volcano/lava"
+	"$normalmap" "models/disasters/volcano/lava_normal"
+	"$translucent" 1
+	"$nocull" 1
+}
