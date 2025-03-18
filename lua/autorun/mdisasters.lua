@@ -87,6 +87,7 @@ loadParticles( ParticlesDirectory )
 
 PrecacheParticleSystem("meteor_trail")
 PrecacheParticleSystem("volcano_trail")
+PrecacheParticleSystem("tornado")
 PrecacheParticleSystem("volcano_explosion")
 
 
