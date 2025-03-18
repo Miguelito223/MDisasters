@@ -17,6 +17,7 @@ ENT.Mass = 100
 
 
 
+
 function ENT:Initialize()
     if SERVER then
         self:SetModel(self.Model)
@@ -28,32 +29,27 @@ function ENT:Initialize()
         if IsValid(phys) then
             phys:SetMass(self.Mass)
             phys:EnableMotion(false)
-        else
-            print("[Tornado] Physics object is INVALID")
         end
 
         self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
         self:SetNoDraw(true)  -- Haz visible por ahora para test
-
-        local bounds = getMapBounds()
-        if not bounds then
-            print("[Tornado] Map bounds not valid!")
-            self:Remove()
-            return
-        end
-        self.MapMinBounds = bounds[1]
-        self.MapMaxBounds = bounds[2]
 
         local dir = VectorRand()
         dir.z = 0
         dir:Normalize()
         self.Direction = dir
         self.NextDirectionChange = CurTime() + 5
+
+        timer.Simple(100, function()
+            if not self:IsValid() then return end
+            self:Remove()
+        end)
         
         ParticleEffectAttach("tornado", PATTACH_POINT_FOLLOW, self, 0)
-        self:EmitSound("disasters/tornado/tornado_loop.wav", 100, 100, 1, CHAN_LOOPING)
-
-        print("[Tornado] Initialized successfully at", self:GetPos())
+        self.Sound = CreateSound(self, "disasters/tornado/tornado_loop.wav")
+        self.Sound:ChangeVolume( 1 )
+        self.Sound:SetSoundLevel( 120 )
+        self.Sound:Play()
     end
 end
 
@@ -115,27 +111,42 @@ function ENT:BounceFromWalls(dir)
 	})
 
 	if tr.Hit then
-		print("[Tornado] Rebotó contra pared. Normal:", tr.HitNormal)
         self.Direction = -dir
 		self.NextDirectionChange = CurTime() + 5
 	end
 end
 
 function ENT:Move()
-	-- Cambiar levemente la dirección cada 5 segundos
-	if CurTime() >= self.NextDirectionChange then
-		local randomAngle = Angle(0, math.random(-15, 15), 0)
-		self.Direction:Rotate(randomAngle)
-		self.Direction:Normalize()
-		self.NextDirectionChange = CurTime() + 5
-	end
+    -- Cambiar levemente la dirección cada 5 segundos
+    if CurTime() >= self.NextDirectionChange then
+        local randomAngle = Angle(0, math.random(-15, 15), 0)
+        self.Direction:Rotate(randomAngle)
+        self.Direction:Normalize()
+        self.NextDirectionChange = CurTime() + 5
+    end
 
-	-- Intentar mover el tornado
-	local newPos = self:GetPos() + self.Direction * self.Speed
-	self:SetPos(newPos)
+    -- Intentar mover el tornado horizontalmente
+    local horizontalMove = self.Direction * self.Speed
+    local currentPos = self:GetPos()
+    local nextPos = currentPos + horizontalMove
 
-	-- Hacer el rebote si choca con algo sólido
-	self:BounceFromWalls(self.Direction)
+    -- Trazar hacia abajo desde el siguiente punto para encontrar el suelo
+    local traceData = {
+        start = nextPos + Vector(0, 0, 500),     -- desde arriba
+        endpos = nextPos - Vector(0, 0, 1000),   -- hasta abajo
+        filter = self
+    }
+    local tr = util.TraceLine(traceData)
+
+    if tr.Hit then
+        -- Coloca el tornado a una altura fija sobre el suelo
+        nextPos.z = tr.HitPos.z + 50  -- 50 unidades sobre el suelo
+    end
+
+    self:SetPos(nextPos)
+
+    -- Rebote en muros u obstáculos sólidos
+    self:BounceFromWalls(self.Direction)
 end
 
 
@@ -152,7 +163,9 @@ function ENT:Think()
 end
 
 function ENT:OnRemove()
-
+    if SERVER then
+        self.Sound:Stop()
+    end
 end
 
 

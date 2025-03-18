@@ -37,7 +37,10 @@ function ENT:Initialize()
         end)
         
         ParticleEffectAttach("volcano_trail", PATTACH_POINT_FOLLOW, self, 0)
-        self:EmitSound("disasters/volcano/volcano_loop.wav", 100, 100, 1, CHAN_LOOPING)
+        self.Sound = CreateSound(self, "disasters/volcano/volcano_loop.wav")
+        self.Sound:ChangeVolume( 1 )
+        self.Sound:SetSoundLevel( 120 )
+        self.Sound:Play()
     end
 end
 
@@ -93,7 +96,10 @@ function ENT:Think()
 end
 
 function ENT:OnRemove()
-
+    if SERVER then
+        self.Sound:Stop()
+    end
+    timer.Remove("Lava_Erupt")
 end
 
 function ENT:Draw()
