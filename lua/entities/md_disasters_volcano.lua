@@ -60,6 +60,11 @@ end
 function ENT:VolcanoErupt()
     self:EmitSound("disasters/volcano/volcano_explosion.wav", 100)
     ParticleEffect( "volcano_explosion", self:GetPos(), Angle(0,0,0) )
+    
+    local earthquake = ents.Create("md_disasters_earthquake")
+    earthquake:Spawn()
+    earthquake:Activate()
+
     for i = 0,5 do
         local rock = ents.Create("md_disasters_meteor")
         rock:Spawn()

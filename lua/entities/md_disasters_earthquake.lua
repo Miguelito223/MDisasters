@@ -22,7 +22,7 @@ function ENT:Initialize()
 
     if SERVER then
         -- Timer constante del terremoto
-        timer.Create("EarthquakeLoop_" .. self:EntIndex(), 0.1, 0, function()
+        timer.Create("EarthquakeLoop_" .. self:EntIndex(), 0.1, 1000, function()
             if not IsValid(self) then return end
             self:DoEarthquake()
         end)
@@ -50,7 +50,7 @@ function ENT:DoEarthquake()
             end
         else
             local phys = ent:GetPhysicsObject()
-            if IsValid(phys) then
+            if IsValid(phys) and ent:IsOnGround() then
                 phys:ApplyForceCenter(VectorRand() * self.PushForce)
 
                 if math.random(0, 100) == 100 then
