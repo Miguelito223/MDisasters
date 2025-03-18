@@ -91,8 +91,7 @@ function ENT:Physics()
                     end
 
                 elseif ent:IsPlayer() or ent:IsNPC() then
-                    local vec = (8 * 25) * Vector(0,0,math.random(0,10)/10) + (Vector(10,10,0)*math.sin(CurTime()*4))
-                    ent:SetVelocity(totalForce + vec)
+                    ent:SetVelocity(totalForce)
                 end
                 
             end

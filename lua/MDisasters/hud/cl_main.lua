@@ -7,7 +7,7 @@ hook.Add("HUDPaint", "MDisasters_HUDPaint", function()
     local function boxes()
         draw.RoundedBox(5, 300, 800, 600, 300, Color(0, 0, 0, 129)) 
         draw.RoundedBox(5, 600, 800, 300, 300, Color(0, 0, 0, 129))
-        draw.RoundedBox(5, 750, 800, 150, 150, Color(00, 0, 0, 129))  
+        draw.RoundedBox(5, 750, 800, 150, 150, Color(0, 0, 0, 129))  
     end
     local function text()
         draw.DrawText("Temperature: " .. tostring( mdisasters.weather.Temperature ) .. "ºC", "HudDefault", 450, 820, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
