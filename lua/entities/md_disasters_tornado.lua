@@ -8,8 +8,8 @@ ENT.PrintName = "Tornado"
 
 ENT.Category = "MDisasters"
 
-ENT.Radius = 50000
-ENT.Strength = 20000
+ENT.Radius = 5000
+ENT.Strength = 2000
 ENT.Speed = 10
 ENT.EnhancedFujitaScale = "EF0"
 ENT.Model = "models/props_c17/oildrum001.mdl"  -- Modelo para el tornado
@@ -76,7 +76,7 @@ function ENT:Physics()
                 -- Suma de fuerzas totales
                 local totalForce = pullForce + verticalForce + vortexForce
 
-                if ent:GetClass() == "prop_physics" then
+                if ent:GetPhysicsObject():IsValid() then
                     local phys = ent:GetPhysicsObject()
                     -- Aplicar la fuerza modificando la velocidad
                     phys:AddVelocity(totalForce)
