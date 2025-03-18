@@ -121,7 +121,7 @@ function Temperature()
                 v.mdisasters.body.Temperature = v.mdisasters.body.Temperature + 0.1
             end
 
-            if v:WaterLevel() >= 3 then
+            if v:WaterLevel() >= 2 then
                 v.mdisasters.body.Temperature = v.mdisasters.body.Temperature - 0.001
             end
             

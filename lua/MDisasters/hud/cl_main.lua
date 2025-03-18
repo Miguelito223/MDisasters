@@ -14,9 +14,9 @@ hook.Add("HUDPaint", "MDisasters_HUDPaint", function()
         draw.DrawText("Humidity: " .. tostring( mdisasters.weather.Humidity ) .. " %", "HudDefault", 450, 840, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
         draw.DrawText("Wind Speed: " .. tostring( mdisasters.weather.Wind_speed ) .. " km/h", "HudDefault", 450, 880, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
         draw.DrawText("Wind Dir: " .. tostring( mdisasters.weather.Wind_dir:Angle().y ) .. "º", "HudDefault", 450, 920, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
-        draw.DrawText("Body temperature: " .. tostring( LocalPlayer():GetNWFloat("BodyTemperature")) .. "ºC", "HudDefault", 450, 940, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
-        draw.DrawText("Body Oxygen: " .. tostring( LocalPlayer():GetNWFloat("BodyOxygen")) .. " %", "HudDefault", 450, 980, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
-        draw.DrawText("Body Wind speed: " .. tostring(LocalPlayer():GetNWFloat("BodyWind")) .. " km/h", "HudDefault", 450, 1020, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
+        draw.DrawText("Body temperature: " .. tostring( math.Round(LocalPlayer():GetNWFloat("BodyTemperature"),1)) .. "ºC", "HudDefault", 450, 940, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
+        draw.DrawText("Body Oxygen: " .. tostring( math.Round(LocalPlayer():GetNWFloat("BodyOxygen"))) .. " %", "HudDefault", 450, 980, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
+        draw.DrawText("Body Wind speed: " .. tostring(math.Round(LocalPlayer():GetNWFloat("BodyWind"),1)) .. " km/h", "HudDefault", 450, 1020, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
     end
 
 
