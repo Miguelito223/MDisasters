@@ -33,7 +33,7 @@ function ENT:Initialize()
         end
 
         self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
-        self:SetNoDraw(false)  -- Haz visible por ahora para test
+        self:SetNoDraw(true)  -- Haz visible por ahora para test
 
         local bounds = getMapBounds()
         if not bounds then
@@ -85,7 +85,7 @@ function ENT:Physics()
                     -- Aplicar la fuerza modificando la velocidad
                     phys:AddVelocity(totalForce)
 
-                    if math.random(0,25) == 25 then
+                    if math.random(0,50) == 50 then
                         constraint.RemoveAll( ent )
 			            ent:GetPhysicsObject():EnableMotion( true )
                     end
