@@ -140,7 +140,7 @@ end )
 
 hook.Add( "HookWeapons", "AddWeaponsContent", function( pnlContent, tree, node )
 
-	local dtree = tree:AddNode("Weapons", "icon16/weather_lightning.png")
+	local dtree = tree:AddNode("Weapons", "icon16/wrench.png")
 
     local WeaponsCategory = {}
     local SpawnableWeatherList = list.Get("MD_Weapons")
