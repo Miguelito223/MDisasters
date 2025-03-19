@@ -77,6 +77,7 @@ function ENT:DoEarthquake()
                     local scaledForce = self.PushForce * (mass / 50)  -- Escala por masa (ajusta divisor si es muy fuerte)
 
                     phys:ApplyForceCenter(VectorRand() * scaledForce)
+                    
                     if math.random(0, 100) == 100 then
                         phys:EnableMotion(true)
                         phys:Wake()

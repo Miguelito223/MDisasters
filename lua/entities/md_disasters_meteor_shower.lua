@@ -20,9 +20,10 @@ function ENT:Think()
     if SERVER then
         if CurTime() >= self.NextStrikeTime then
             local origin = self:GetPos()
+            local mapbound = getMapBounds()
 
             -- Posición aleatoria alrededor
-            local strikePos = origin + Vector(math.random(-3000, 3000), math.random(-3000, 3000), 0)
+            local strikePos = origin + Vector(math.random(mapbound[1].x, mapbound[2].x), math.random(mapbound[1].y, mapbound[2].y), 0)
 
             -- Trazar hacia abajo para encontrar el suelo
             local tr = util.TraceLine({
