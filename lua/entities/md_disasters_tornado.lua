@@ -8,9 +8,7 @@ ENT.PrintName = "Tornado"
 
 ENT.Category = "MDisasters"
 
-ENT.Radius = GetConVar("mdisasters_tornado_radius"):GetInt()
-ENT.MaxForce = GetConVar("mdisasters_tornado_force"):GetInt()
-ENT.Speed = GetConVar("mdisasters_tornado_speed"):GetInt()
+
 ENT.EnhancedFujitaScale = "EF1"
 ENT.Model = "models/props_c17/oildrum001.mdl"
 ENT.Mass = 100
@@ -39,6 +37,9 @@ function ENT:Initialize()
         dir:Normalize()
         self.Direction = dir
         self.NextDirectionChange = CurTime() + 5
+        self.Radius = GetConVar("mdisasters_tornado_radius"):GetInt()
+        self.MaxForce = GetConVar("mdisasters_tornado_force"):GetInt()
+        self.Speed = GetConVar("mdisasters_tornado_speed"):GetInt()
 
         timer.Simple(GetConVar("mdisasters_tornado_time"):GetInt(), function()
             if not self:IsValid() then return end

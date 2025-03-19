@@ -7,12 +7,6 @@ ENT.AdminOnly = false
 ENT.PrintName = "Earthquake"
 ENT.Category = "MDisasters"
 
-ENT.Radius = GetConVar("mdisasters_earthquake_radius"):GetInt()
-ENT.ShakeIntensity = GetConVar("mdisasters_earthquake_shake_force"):GetInt()
-ENT.ShakeDuration = 1
-ENT.ShakeFreq = 5 -- frecuencia de la sacudida
-ENT.PushForce = GetConVar("mdisasters_earthquake_force"):GetInt()
-ENT.PushForcePlayer = GetConVar("mdisasters_earthquake_player_force"):GetInt()
 
 
 
@@ -34,6 +28,13 @@ function ENT:Initialize()
             if not self:IsValid() then return end
             self:Remove()
         end)
+
+        self.Radius = GetConVar("mdisasters_earthquake_radius"):GetInt()
+        self.ShakeIntensity = GetConVar("mdisasters_earthquake_shake_force"):GetInt()
+        self.ShakeDuration = 1
+        self.ShakeFreq = 5 -- frecuencia de la sacudida
+        self.PushForce = GetConVar("mdisasters_earthquake_force"):GetInt()
+        self.PushForcePlayer = GetConVar("mdisasters_earthquake_player_force"):GetInt()
 
 
        
