@@ -60,6 +60,8 @@ function ENT:DoEarthquake()
         else
             local phys = ent:GetPhysicsObject()
             if phys:IsValid() then
+
+
                 -- Trazar una línea hacia abajo desde el centro de la entidad para ver si está tocando el suelo
                 local startPos = ent:GetPos()
                 local endPos = startPos - Vector(0, 0, 10)  -- 10 unidades hacia abajo
@@ -71,14 +73,17 @@ function ENT:DoEarthquake()
                 local traceResult = util.TraceLine(traceData)
 
                 if traceResult.Hit then
-                    phys:AddVelocity(VectorRand() * self.PushForce)
+                    local mass = phys:GetMass()
+                    local scaledForce = self.PushForce * (mass / 50)  -- Escala por masa (ajusta divisor si es muy fuerte)
 
+                    phys:ApplyForceCenter(VectorRand() * scaledForce)
                     if math.random(0, 100) == 100 then
-                        constraint.RemoveAll(ent)
                         phys:EnableMotion(true)
                         phys:Wake()
+                        constraint.RemoveAll(ent)
                     end
                 end
+
             end
         end
     end
