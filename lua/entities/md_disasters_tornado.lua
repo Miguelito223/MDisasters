@@ -79,6 +79,7 @@ function ENT:Physics()
 
                 local totalForce = pullForce + verticalForce + vortexForce
 
+
                 if ent:GetPhysicsObject():IsValid() then
                     local phys = ent:GetPhysicsObject()
                     phys:AddVelocity(totalForce)
@@ -88,8 +89,11 @@ function ENT:Physics()
                         phys:EnableMotion(true)
                         phys:Wake()
                     end
-                elseif ent:IsPlayer() or ent:IsNPC() then
-                    ent:SetVelocity(totalForce)
+                end
+                
+                -- Aplicar fuerza a jugadores y NPCs
+                if ent:IsPlayer() or ent:IsNPC() then
+                    ent:SetVelocity(totalForce * 2)
                 end
             end
         end
