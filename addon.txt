@@ -1,0 +1,3 @@
+MDisasters disasters:
+ now: tornado, meteorite, earthquake, lightning, meteor showe and lightning storm and volcano
+future: tsunami, hurricane, lightning storm with rain, tornado caregories, more types of weather and earthquake categories
