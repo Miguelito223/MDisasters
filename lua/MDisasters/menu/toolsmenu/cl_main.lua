@@ -91,6 +91,16 @@ local function MDisastersSettingsClient( CPanel )
 end
 
 local function MDisastersSettingsServer( CPanel )
+	CreateSliderConVariable(CPanel, "Tornado Speed", 0, 10000, 0, "mdisasters_tornado_speed")
+	CreateSliderConVariable(CPanel, "Tornado Radius", 0, 10000, 0, "mdisasters_tornado_radius")
+	CreateSliderConVariable(CPanel, "Tornado Force", 0, 10000, 0, "mdisasters_tornado_force")
+	CreateSliderConVariable(CPanel, "Tornado Remove Time", 0, 10000, 0, "mdisasters_tornado_time")
+	CreateSliderConVariable(CPanel, "Earthquake Force", 0, 10000, 0, "mdisasters_earthquake_force")
+	CreateSliderConVariable(CPanel, "Earthquake Radius", 0, 10000, 0, "mdisasters_earthquake_radius")
+	CreateSliderConVariable(CPanel, "Earthquake Player force", 0, 10000, 0, "mdisasters_earthquake_player_force")
+	CreateSliderConVariable(CPanel, "Earthquake Remove Time", 0, 10000, 0, "mdisasters_earthquake_time")
+	CreateSliderConVariable(CPanel, "Earthquake Shake Force", 0, 10000, 0, "mdisasters_earthquake_shake_force")
+	CreateSliderConVariable(CPanel, "Volcano Time", 0, 10000, 0, "mdisasters_volcano_time")
 
 end
 

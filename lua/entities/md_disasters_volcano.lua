@@ -31,7 +31,7 @@ function ENT:Initialize()
             phys:EnableMotion(false)
         end
 		
-        timer.Create("Lava_Erupt", 200, 0, function()
+        timer.Create("Lava_Erupt",  GetConVar("mdisasters_volcano_time"):GetInt(), 0, function()
             if !self:IsValid() then return end
             self:VolcanoErupt() 
         end)

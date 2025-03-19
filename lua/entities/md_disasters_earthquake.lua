@@ -7,12 +7,12 @@ ENT.AdminOnly = false
 ENT.PrintName = "Earthquake"
 ENT.Category = "MDisasters"
 
-ENT.Radius = 1500
-ENT.ShakeIntensity = 15
+ENT.Radius = GetConVar("mdisasters_earthquake_radius"):GetInt()
+ENT.ShakeIntensity = GetConVar("mdisasters_earthquake_shake_force"):GetInt()
 ENT.ShakeDuration = 1
 ENT.ShakeFreq = 5 -- frecuencia de la sacudida
-ENT.PushForce = 150
-ENT.PushForcePlayer = 150
+ENT.PushForce = GetConVar("mdisasters_earthquake_force"):GetInt()
+ENT.PushForcePlayer = GetConVar("mdisasters_earthquake_player_force"):GetInt()
 
 
 
@@ -30,7 +30,7 @@ function ENT:Initialize()
         self:SetNoDraw(true) -- No se ve, puro efecto
         self:SetSolid(SOLID_NONE)
 
-        timer.Simple(100, function()
+        timer.Simple(GetConVar("mdisasters_earthquake_time"):GetInt(), function()
             if not self:IsValid() then return end
             self:Remove()
         end)
