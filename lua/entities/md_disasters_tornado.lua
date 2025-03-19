@@ -8,11 +8,11 @@ ENT.PrintName = "Tornado"
 
 ENT.Category = "MDisasters"
 
-ENT.Radius = 5000
-ENT.Strength = 2000
+ENT.Radius = 3000  -- 76 metros
+ENT.MaxForce = 6000  -- fuerza máxima cerca del centro
 ENT.Speed = 10
-ENT.EnhancedFujitaScale = "EF0"
-ENT.Model = "models/props_c17/oildrum001.mdl"  -- Modelo para el tornado
+ENT.EnhancedFujitaScale = "EF1"
+ENT.Model = "models/props_c17/oildrum001.mdl"
 ENT.Mass = 100
 
 
@@ -59,37 +59,38 @@ function ENT:Physics()
         if ent:IsValid() then
             local distSqr = ent:GetPos():DistToSqr(tornadoPos)
             if distSqr < self.Radius ^ 2 and distSqr > 0 then
-                local direction = self.Direction
                 local distance = math.sqrt(distSqr)
 
-                -- Fuerza de atracción horizontal
-                local pullForce = direction * (self.Strength / distance)
+                -- Fracción de cercanía (1 cerca del centro, 0 en el borde)
+                local distanceFraction = 1 - (distance / self.Radius)
+                distanceFraction = math.Clamp(distanceFraction, 0, 1)
 
+                -- Fuerza proporcional a cercanía al centro (decay cuadrático)
+                local forceMagnitude = self.MaxForce * distanceFraction ^ 2
 
-                -- Fuerza vertical proporcional a cercanía (efecto cono)
-                local verticalForce = Vector(0, 0, 1) * (self.Strength * 0.5 / distance)
+                -- Direcciones de fuerza
+                local direction = (tornadoPos - ent:GetPos()):GetNormalized()
+                direction.z = 0  -- solo horizontal
+                local pullForce = direction * forceMagnitude
 
-                -- Fuerza de giro/vórtice (perpendicular a la dirección)
-                local vortexDir = Vector(-direction.y, direction.x, 0)  -- 90 grados rotado
-                local vortexForce = vortexDir * (self.Strength * 0.3 / distance)
+                local verticalForce = Vector(0, 0, forceMagnitude * 0.5)
+                local vortexDir = Vector(-direction.y, direction.x, 0)
+                local vortexForce = vortexDir * (forceMagnitude * 0.4)
 
-                -- Suma de fuerzas totales
                 local totalForce = pullForce + verticalForce + vortexForce
 
                 if ent:GetPhysicsObject():IsValid() then
                     local phys = ent:GetPhysicsObject()
-                    -- Aplicar la fuerza modificando la velocidad
                     phys:AddVelocity(totalForce)
 
-                    if math.random(0,50) == 50 then
-                        constraint.RemoveAll( ent )
-			            ent:GetPhysicsObject():EnableMotion( true )
+                    if math.random(0, 50) == 50 then
+                        constraint.RemoveAll(ent)
+                        phys:EnableMotion(true)
+                        phys:Wake()
                     end
-
                 elseif ent:IsPlayer() or ent:IsNPC() then
                     ent:SetVelocity(totalForce)
                 end
-                
             end
         end
     end
