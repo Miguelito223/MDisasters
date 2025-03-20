@@ -1,4 +1,5 @@
 util.AddNetworkString( "md_clmenu_vars" )
+util.AddNetworkString( "md_isOutdoor" )
 util.AddNetworkString("md_clparticles")
 util.AddNetworkString("md_clparticles_ground")
 util.AddNetworkString("md_sendsound")

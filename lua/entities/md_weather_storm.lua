@@ -10,7 +10,6 @@ function ENT:Initialize()
     if (CLIENT) then
         LocalPlayer().Sound =  CreateLoopedSound(LocalPlayer(),"ambient/weather/rumble_rain_loop.wav")
         LocalPlayer().Sound2 =  CreateLoopedSound(LocalPlayer(),"ambient/weather/thunderstorm.wav")
-                LocalPlayer().Sound2 =  CreateLoopedSound(LocalPlayer(),"ambient/weather/thunderstorm.wav")
 
     end
     if SERVER then
@@ -57,14 +56,15 @@ end
 
 function ENT:RainEffect()
     for _, ply in ipairs(player.GetAll()) do
+        if isOutdoor(ply) then
+            net.Start("md_clparticles")
+            net.WriteString("rain_effect")
+            net.Send(ply)
 
-        net.Start("md_clparticles")
-        net.WriteString("rain_effect")
-        net.Send(ply)
-
-        net.Start("md_clparticles_ground")
-        net.WriteString("rain_effect_ground")
-        net.Send(ply)
+            net.Start("md_clparticles_ground")
+            net.WriteString("rain_effect_ground")
+            net.Send(ply)
+        end
 
     end
 end
@@ -121,8 +121,6 @@ function ENT:OnRemove()
 
 	end
     if CLIENT then
-        
-        
         LocalPlayer().Sound:Stop()
         LocalPlayer().Sound2:Stop()
     end

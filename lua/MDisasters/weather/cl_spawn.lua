@@ -14,7 +14,7 @@ function PostSpawnCL(ply)
     LocalPlayer().mdisasters.HUD.SneezeBigIntensity  = 0
 
     LocalPlayer().mdisasters.Outside = {}
-    LocalPlayer().mdisasters.Outside.IsOutside     = false
+    LocalPlayer().mdisasters.Outside.IsOutside = false
     LocalPlayer().mdisasters.Outside.OutsideFactor = 0
 
     LocalPlayer().Sounds = {}

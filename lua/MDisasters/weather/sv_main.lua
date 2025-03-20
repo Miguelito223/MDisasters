@@ -140,18 +140,22 @@ function Wind()
         if ent:IsValid() then
 
             if ent:IsPlayer() or ent:IsNPC() then
-                if isOutdoors(ent) then
+                if isOutdoor(ent) then
                     ent:SetVelocity(windVec)
                     
                     if ent:IsPlayer() then
                         ent:SetNWFloat("BodyWind", Force )
+                    end
+                else
+                    if ent:IsPlayer() then
+                        ent:SetNWFloat("BodyWind", 0)
                     end
                 end
             else
                 local phys = ent:GetPhysicsObject()
                 if phys:IsValid() and phys:IsMotionEnabled() then
                     -- Solo afectar props si están al aire libre
-                    if isOutdoors(ent) then
+                    if isOutdoor(ent) then
                         phys:AddVelocity(windVec)
                     end
                 end

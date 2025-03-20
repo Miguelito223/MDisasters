@@ -53,15 +53,16 @@ end
 function ENT:RainEffect()
     for _, ply in ipairs(player.GetAll()) do
 
-        net.Start("md_clparticles")
-        net.WriteString("rain_effect")
-        net.Send(ply)
+        if isOutdoor(ply) then
+            net.Start("md_clparticles")
+            net.WriteString("rain_effect")
+            net.Send(ply)
 
-        net.Start("md_clparticles_ground")
-        net.WriteString("rain_effect_ground")
-        net.Send(ply)
+            net.Start("md_clparticles_ground")
+            net.WriteString("rain_effect_ground")
+            net.Send(ply)
 
-
+        end
     end
 end
 

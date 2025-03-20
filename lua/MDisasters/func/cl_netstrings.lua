@@ -57,3 +57,24 @@ net.Receive("md_ambientlight", function()
 	net.SendToServer()
 
 end)
+
+net.Receive("md_isOutdoor", function()
+	isOutside                = net.ReadBool()
+
+	if LocalPlayer().gDisasters == nil then return end
+
+
+	LocalPlayer().gDisasters.Outside.IsOutside     = isOutside
+
+
+
+
+	if isOutside then
+
+		LocalPlayer().gDisasters.Outside.OutsideFactor   = Lerp( 0.01, LocalPlayer().gDisasters.Outside.OutsideFactor, 100)
+
+	else
+		LocalPlayer().gDisasters.Outside.OutsideFactor   = Lerp( 0.01, LocalPlayer().gDisasters.Outside.OutsideFactor, 0)
+	end
+
+end)
