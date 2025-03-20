@@ -17,11 +17,11 @@ ENT.Mass = 100
 
 
 function ENT:Initialize()
-    self.Sounds = CreateSound(self, "disasters/volcano/volcano_loop.wav")
-    self.Sounds:ChangeVolume( 1 )
-    self.Sounds:SetSoundLevel( 120 )
-    self.Sounds:Play()
-    
+	local sound = Sound("disasters/tornado/tornado_loop.wav")
+    CSPatch = CreateSound(self, sound)
+	CSPatch:Play()
+    self.Sounds = CSPatch
+
     if SERVER then
         self:SetModel(self.Model)
         self:SetSolid(SOLID_VPHYSICS)
@@ -170,9 +170,7 @@ function ENT:Think()
 end
 
 function ENT:OnRemove()
-    if SERVER then
-        self.Sounds:Stop()
-    end
+    self.Sounds:Stop()
 end
 
 

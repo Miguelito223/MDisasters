@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 ENT.Base = "base_anim"
 
-ENT.Spawnable = true
+ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.PrintName = "Earthquake"
 ENT.Category = "MDisasters"
