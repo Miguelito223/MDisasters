@@ -12,12 +12,9 @@ ENT.Category = "MDisasters"
 
 function ENT:Initialize()
 
-    if (CLIENT) then
-        LocalPlayer().Sound = CreateSound(LocalPlayer(), "disasters/earthquake/earthquake_loop.wav")
-        LocalPlayer().Sound:SetSoundLevel( 120 )
-        LocalPlayer().Sound:ChangeVolume( 1 )
-        LocalPlayer().Sound:Play()
-    end
+
+
+
     if SERVER then
         -- Timer constante del terremoto
         self:SetModel("models/props_junk/rock001a.mdl") -- Modelo opcional
@@ -28,6 +25,10 @@ function ENT:Initialize()
             if not self:IsValid() then return end
             self:Remove()
         end)
+
+        net.Start("md_sendloopsound")
+        net.WriteString("disasters/earthquake/earthquake_loop.wav")
+        net.Broadcast()
 
         self.Radius = GetConVar("mdisasters_earthquake_radius"):GetInt()
         self.ShakeIntensity = GetConVar("mdisasters_earthquake_shake_force"):GetInt()
@@ -101,8 +102,10 @@ end
 
 function ENT:OnRemove()
     -- Detiene sonido y timer
-    if (CLIENT) then
-        LocalPlayer().Sound:Stop()
+    if (SERVER) then
+        net.Start("md_stoploopsound")
+        net.WriteString("disasters/earthquake/earthquake_loop.wav")
+        net.Broadcast()
     end
     timer.Remove("EarthquakeLoop_" .. self:EntIndex())
 end

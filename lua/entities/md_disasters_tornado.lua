@@ -17,6 +17,11 @@ ENT.Mass = 100
 
 
 function ENT:Initialize()
+    self.Sounds = CreateSound(self, "disasters/volcano/volcano_loop.wav")
+    self.Sounds:ChangeVolume( 1 )
+    self.Sounds:SetSoundLevel( 120 )
+    self.Sounds:Play()
+    
     if SERVER then
         self:SetModel(self.Model)
         self:SetSolid(SOLID_VPHYSICS)
@@ -47,10 +52,6 @@ function ENT:Initialize()
         end)
         
         ParticleEffectAttach("tornado", PATTACH_POINT_FOLLOW, self, 0)
-        self.Sound = CreateSound(self, "disasters/tornado/tornado_loop.wav")
-        self.Sound:ChangeVolume( 1 )
-        self.Sound:SetSoundLevel( 120 )
-        self.Sound:Play()
     end
 end
 
@@ -170,7 +171,7 @@ end
 
 function ENT:OnRemove()
     if SERVER then
-        self.Sound:Stop()
+        self.Sounds:Stop()
     end
 end
 

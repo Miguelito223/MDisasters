@@ -7,11 +7,9 @@ ENT.AdminOnly = false
 ENT.Category = "MDisasters"
 
 function ENT:Initialize()
-    if (CLIENT) then
-        LocalPlayer().Sound =  CreateLoopedSound(LocalPlayer(),"ambient/weather/rumble_rain_loop.wav")
-        LocalPlayer().Sound2 =  CreateLoopedSound(LocalPlayer(),"ambient/weather/thunderstorm.wav")
+    
 
-    end
+
     if SERVER then
         mdisasters.weather_target.Wind_dir = Vector(math.random(-1000,1000), math.random(-1000,1000),0)
         mdisasters.weather_target.Wind_speed = math.random(5, 10)
@@ -44,6 +42,10 @@ function ENT:Initialize()
 				paintSky_Fade(self.Original_SkyData, 0.05)
 			end)
 		end 
+
+        net.Start("md_sendloopsound")
+        net.WriteString("ambient/weather/thunderstorm.wav")
+        net.Broadcast()
 
         setMapLight("d")
 
@@ -119,10 +121,9 @@ function ENT:OnRemove()
 
 		setMapLight("t")
 
-	end
-    if CLIENT then
-        LocalPlayer().Sound:Stop()
-        LocalPlayer().Sound2:Stop()
+        net.Start("md_stoploopsound")
+        net.WriteString("ambient/weather/thunderstorm.wav")
+        net.Broadcast()
     end
 end
 

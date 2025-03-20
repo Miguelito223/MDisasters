@@ -78,3 +78,17 @@ net.Receive("md_isOutdoor", function()
 	end
 
 end)
+
+net.Receive("md_sendloopsound", function()
+
+	local name = net.ReadString()
+	LocalPlayer().Sound = CreateLoopedSound(LocalPlayer(), name)
+	LocalPlayer().Sound:Play()
+end)
+
+net.Receive("md_stoploopsound", function()
+
+	local name = net.ReadString()
+	LocalPlayer().Sound = CreateLoopedSound(LocalPlayer(), name)
+	LocalPlayer().Sound:Stop()
+end)

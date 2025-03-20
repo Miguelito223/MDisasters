@@ -7,9 +7,7 @@ ENT.AdminOnly = false
 ENT.Category = "MDisasters"
 
 function ENT:Initialize()
-    if (CLIENT) then
-        LocalPlayer().Sound =  CreateLoopedSound(LocalPlayer(),"ambient/wind/wind_med1.wav")
-    end
+
     if SERVER then
         self:SetModel("models/props_junk/PopCan01a.mdl") -- invisible
         self:SetNoDraw(true)
@@ -20,12 +18,6 @@ function ENT:Initialize()
         mdisasters.weather_target.Temperature = math.random(5, 15)
         mdisasters.weather_target.Humidity = math.random(25, 40)
         mdisasters.weather_target.Pressure = math.random(980, 990)
-        
-        -- Sonido ambiente de viento
-        self.Sound = CreateSound(self, "ambient/wind/wind_med1.wav")
-        self.Sound:SetSoundLevel(80)
-        self.Sound:Play()
-
         
     end
 end
@@ -38,9 +30,6 @@ function ENT:OnRemove()
         mdisasters.weather_target.Humidity = mdisasters.weather_original.Humidity
         mdisasters.weather_target.Pressure = mdisasters.weather_original.Pressure
 	end
-    if SERVER then
-        self.Sound:Stop()
-    end
 end
 
 function ENT:Think()
