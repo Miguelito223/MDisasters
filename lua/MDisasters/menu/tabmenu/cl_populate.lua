@@ -7,4 +7,4 @@ AddMDisastersSpawn("Lighting Storm", "md_weather_lightning_storm", "Weather", tr
 AddMDisastersSpawn("Meteor Shower", "md_weather_meteor_shower", "Weather", true )
 AddMDisastersSpawn("Rain", "md_weather_rain", "Weather", true )
 AddMDisastersSpawn("Wind", "md_weather_wind", "Weather", true )
-AddMDisastersSpawn("Storm", "md_weather_storm", "Weather", true )
+AddMDisastersSpawn("Lighting Storm With Rain", "md_weather_storm", "Weather", true )
