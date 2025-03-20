@@ -1,4 +1,10 @@
 util.AddNetworkString( "md_clmenu_vars" )
+util.AddNetworkString("md_clparticles")
+util.AddNetworkString("md_clparticles_ground")
+util.AddNetworkString("md_sendsound")
+util.AddNetworkString("md_stopsound")
+util.AddNetworkString("md_maplight_cl")
+util.AddNetworkString("md_ambientlight")
 
 net.Receive( "md_clmenu_vars", function( len, pl )
 	if !pl:IsAdmin() or !pl:IsSuperAdmin() then return end

@@ -1,25 +1,8 @@
-function Player_Body_Set(ply)
-    ply.mdisasters = {}
-    ply.mdisasters.body = {}
-    ply.mdisasters.body.Temperature = 36.6
-    ply.mdisasters.body.Oxygen = 100
-
-    ply.mdisasters.area = {}
-    ply.mdisasters.area.local_wind = 0
-    ply.mdisasters.area.isoutdoor = false
-
-    ply:SetNWFloat("BodyTemperature", ply.mdisasters.body.Temperature)
-    ply:SetNWFloat("BodyOxygen", ply.mdisasters.body.Oxygen)
-    ply:SetNWFloat("BodyWind", ply.mdisasters.body.local_wind)
-end
-
-function Player_Body_Reset(ply)
-    ply.mdisasters.body.Temperature = 36.6
-    ply.mdisasters.body.Oxygen = 100
-
-    ply:SetNWFloat("BodyTemperature", ply.mdisasters.body.Temperature)
-    ply:SetNWFloat("BodyOxygen", ply.mdisasters.body.Oxygen)
-end
+SetGlobalFloat("temperature", 0)
+SetGlobalFloat("pressure", 0)
+SetGlobalFloat("humidity", 0)
+SetGlobalFloat("wind_speed", 0)
+SetGlobalVector("wind_dir", Vector(0,0,0))
 
 function Weather_Update()
     mdisasters.weather.Temperature = math.Clamp(mdisasters.weather.Temperature, -273.3, 273.3)
@@ -27,11 +10,11 @@ function Weather_Update()
     mdisasters.weather.Humidity  = math.Clamp(mdisasters.weather.Humidity, 0, 100)
 
 
-    mdisasters.weather.Temperature = Lerp(0.005, mdisasters.weather.Temperature, mdisasters.weather.Temperature_change)
-    mdisasters.weather.Pressure = Lerp(0.005, mdisasters.weather.Pressure, mdisasters.weather.Pressure_change)
-    mdisasters.weather.Wind_speed = Lerp(0.005, mdisasters.weather.Wind_speed, mdisasters.weather.Wind_speed_change)
-    mdisasters.weather.Humidity = Lerp(0.005, mdisasters.weather.Humidity, mdisasters.weather.Humidity_change)
-    mdisasters.weather.Wind_dir = LerpVector(0.005, mdisasters.weather.Wind_dir, mdisasters.weather.Wind_dir_change)
+    mdisasters.weather.Temperature = Lerp(0.005, mdisasters.weather.Temperature, mdisasters.weather_target.Temperature)
+    mdisasters.weather.Pressure = Lerp(0.005, mdisasters.weather.Pressure, mdisasters.weather_target.Pressure)
+    mdisasters.weather.Wind_speed = Lerp(0.005, mdisasters.weather.Wind_speed, mdisasters.weather_target.Wind_speed)
+    mdisasters.weather.Humidity = Lerp(0.005, mdisasters.weather.Humidity, mdisasters.weather_target.Humidity)
+    mdisasters.weather.Wind_dir = LerpVector(0.005, mdisasters.weather.Wind_dir, mdisasters.weather_target.Wind_dir)
 
 
     Temperature()
@@ -46,7 +29,8 @@ function Temperature()
     if GetConVar("mdisasters_hud_temperature_enabled"):GetBool() == false then return end
 
 
-	local temp = mdisasters.weather.Temperature 
+	local temp = mdisasters.weather.Temperature  
+    SetGlobalFloat("temperature",temp)
 	local humidity = mdisasters.weather.Humidity
 	local compensation_max = 10   -- degrees 
 	local body_heat_genK = engine.TickInterval() -- basically 1 degree Celsius per second
@@ -74,6 +58,7 @@ function Temperature()
             
             v:SetNWFloat("BodyTemperature", v.mdisasters.body.Temperature)
         end
+        
     end
     local function Damage()
         if GetConVar("mdisasters_hud_damage_temperature_enabled"):GetBool() == false then return end
@@ -135,15 +120,44 @@ function Temperature()
 end
 
 function Humidity()
-    
+    SetGlobalVector("humidity", mdisasters.weather.Humidity)   
 end
 
 function Pressure()
-    
+    SetGlobalVector("pressure", mdisasters.weather.Pressure)   
 end
 
 function Wind()
-    
+    local Direction = mdisasters.weather.Wind_dir
+    local Force = mdisasters.weather.Wind_speed
+    SetGlobalFloat("wind_speed", Force)
+    SetGlobalVector("wind_dir", Direction)
+
+    local windVec = Direction:GetNormalized() * Force
+    local ents = ents.GetAll()
+
+    for _, ent in ipairs(ents) do
+        if ent:IsValid() then
+
+            if ent:IsPlayer() or ent:IsNPC() then
+                if isOutdoors(ent) then
+                    ent:SetVelocity(windVec)
+                    
+                    if ent:IsPlayer() then
+                        ent:SetNWFloat("BodyWind", Force )
+                    end
+                end
+            else
+                local phys = ent:GetPhysicsObject()
+                if phys:IsValid() and phys:IsMotionEnabled() then
+                    -- Solo afectar props si están al aire libre
+                    if isOutdoors(ent) then
+                        phys:AddVelocity(windVec)
+                    end
+                end
+            end
+        end
+    end
 end
 
 local delay = 0
@@ -187,5 +201,3 @@ function Oxygen()
 end
 
 hook.Add("Think", "Weather_Update", Weather_Update)
-hook.Add("PlayerInitialSpawn", "Player_body_set", Player_Body_Set)
-hook.Add("PlayerSpawn", "Player_body_set", Player_Body_Reset)

@@ -16,26 +16,27 @@ end
 local LuaDirectory = "MDisasters"
 
 local function AddLuaFile( File, directory )
-	local prefix = string.lower( string.Left( File, 3 ) )
-    local prefix_large = string.lower( string.Left( File, 4 ) )
+	local prefix = string.lower(File)
 
-	if SERVER and prefix == "sv_" or  prefix_large == "_sv_" then
-		include( directory .. File )
-        msg("Include file: " .. File)
-	elseif prefix == "sh_" or  prefix_large == "_sh_" then
-		if SERVER then
+	if prefix:StartWith("sv_") or  prefix:StartWith("_sv_") then
+		if (SERVER) then
+			include( directory .. File )
+        	msg("Server Include file: " .. File)
+		end
+	elseif prefix:StartWith("sh_") or  prefix:StartWith("_sh_") then
+		if (SERVER) then
 			AddCSLuaFile( directory .. File )
 			msg("Shared ADDC file: " .. File)
 		end
 		include( directory .. File )
 		msg("Shared Include file: " .. File)
-	elseif prefix == "cl_" or  prefix_large == "_cl_" then
-		if SERVER then
+	elseif prefix:StartWith("cl_") or  prefix:StartWith("_cl_")then
+		if (SERVER) then
 			AddCSLuaFile( directory .. File )
-			msg("Shared ADDC file: " .. File)
-		elseif CLIENT then
+			msg("Client ADDC file: " .. File)
+		elseif (CLIENT) then
 			include( directory .. File )
-			msg("Shared Include file: " .. File)
+			msg("Client Include file: " .. File)
 		end
 	end
 end
@@ -89,6 +90,8 @@ PrecacheParticleSystem("meteor_trail")
 PrecacheParticleSystem("volcano_trail")
 PrecacheParticleSystem("tornado")
 PrecacheParticleSystem("volcano_explosion")
+PrecacheParticleSystem("rain_effect")
+PrecacheParticleSystem("rain_effect_ground")
 
 
 msg("MDisasters Loaded")
