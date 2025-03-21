@@ -11,8 +11,9 @@ function ENT:Initialize()
     if SERVER then
         self:SetModel("models/props_junk/PopCan01a.mdl")
         self:SetNoDraw(false)  -- Solo en SERVER
-
-        local startPos = self:GetPos() + Vector(0, 0, 1000)
+        
+        local Zbounds = getMapSkyBox()[2].z
+        local startPos = self:GetPos() + Vector(0, 0, Zbounds)
         local endPos = self:GetPos()
 
         self:SetNWVector("StartPos", startPos)

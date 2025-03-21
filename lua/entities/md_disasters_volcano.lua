@@ -56,7 +56,7 @@ function ENT:LavaGlow()
 		dlight.b = 0
 		dlight.brightness = 8
 		dlight.Decay = 1000
-		dlight.Size = 556
+		dlight.Size = 50000
 		dlight.DieTime = CurTime() + 1
 	end
 	

@@ -29,12 +29,6 @@ function ENT:Initialize()
         self.Original_SkyData["TopColor"]    = Vector(0.2, 0.2, 0.2)
         self.Original_SkyData["BottomColor"] = Vector(0.2, 0.2, 0.2)
         self.Original_SkyData["DuskScale"]   = 0
-			
-		self.Reset_SkyData = {}
-        self.Reset_SkyData["TopColor"]       = Vector(0.20,0.50,1.00)
-        self.Reset_SkyData["BottomColor"]    = Vector(0.80,1.00,1.00)
-        self.Reset_SkyData["DuskScale"]      = 1
-        self.Reset_SkyData["SunColor"]       = Vector(0.20,0.10,0.00)
         
 		for i=0, 100 do
 			timer.Simple(i/100, function()
@@ -104,18 +98,26 @@ function ENT:OnRemove()
 
 	if (SERVER) then		
         linghting = ents.FindByClass("md_weather_lightning_storm")[1]
-        linghting:Remove()
+        if IsValid(linghting) then
+            linghting:Remove()
+        end
+
 
         mdisasters.weather_target.Wind_dir = mdisasters.weather_original.Wind_dir 
         mdisasters.weather_target.Wind_speed = mdisasters.weather_original.Wind_speed
         mdisasters.weather_target.Temperature = mdisasters.weather_original.Temperature
         mdisasters.weather_target.Humidity = mdisasters.weather_original.Humidity
         mdisasters.weather_target.Pressure = mdisasters.weather_original.Pressure
-        
+
+        Reset_SkyData = {}
+        Reset_SkyData["TopColor"]       = Vector(0.20,0.50,1.00)
+        Reset_SkyData["BottomColor"]    = Vector(0.80,1.00,1.00)
+        Reset_SkyData["DuskScale"]      = 1
+        Reset_SkyData["SunColor"]       = Vector(0.20,0.10,0.00)   
 
 		for i=0, 40 do
 			timer.Simple(i/100, function()
-				paintSky_Fade(self.Reset_SkyData,0.05)
+				paintSky_Fade(Reset_SkyData,0.05)
 			end)
 		end
 
