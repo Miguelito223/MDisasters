@@ -50,7 +50,7 @@ function ENT:Initialize()
 
         timer.Simple(0.1, function()
             if !self:IsValid() then return end
-            ParticleEffectAttach("meteor_trail", PATTACH_POINT_FOLLOW, self, 2)
+            ParticleEffectAttach("meteor_trail", PATTACH_POINT_FOLLOW, self, 0)
         end)
 
         
