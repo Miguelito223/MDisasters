@@ -33,15 +33,7 @@ function ENT:Initialize()
             phys:AddAngleVelocity( VectorRand() * 100 )
         end
 
-
-
-        if IsMapRegistered() == true then
-           self:SetMeteoriteSkyPos()
-        else
-            self:Remove()
-        end
-
-
+        self:SetMeteoriteSkyPos()
 
         timer.Simple(14, function()
             if !self:IsValid() then return end

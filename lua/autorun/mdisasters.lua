@@ -4,12 +4,12 @@ mdisasters.author = "Miguelillo948"
 mdisasters.version = "0.0.1"
 
 function msg(...)
-    MsgC(Color(43,255,0), "[MDisasters]",Color(255,255,255), ...)
+    MsgC(Color(43,255,0), "[MDisasters][Debug]",Color(255,255,255), ...)
     MsgN()
 end
 
 function error(...)
-    MsgC(Color(43,255,0), "[MDisasters]",Color(255,0,0), ...)
+    MsgC(Color(43,255,0), "[MDisasters][Error]",Color(255,0,0), ...)
     MsgN()
 end 
 
@@ -85,6 +85,45 @@ local function loadParticles( directory )
 end
 
 loadParticles( ParticlesDirectory )
+
+
+
+local DecalsDirectory = "materials/decals/mdisasters"
+
+local function AddDecalsFile(Key, File, directory)
+    -- Extraemos el nombre base, ignorando cualquier número al final y la extensión
+    local baseName = File:match("(.+)_?%d*%.")  -- Ahora esta expresión regular también captura casos con guiones bajos o sin ellos y elimina los números
+
+    local decalPath = "decals/mdisasters/" .. baseName
+    
+    -- Imprime el decal cargado
+    msg("Adding decal: " .. decalPath)
+    
+    -- Agregar decal
+    game.AddDecal(baseName, decalPath)
+
+    -- Puedes aplicar más lógica para manejar diferentes tipos de decals si es necesario
+end
+
+local function loadDecalsFiles(directory)
+    directory = directory .. "/"
+
+    local files, directories = file.Find(directory .. "*", "THIRDPARTY")
+
+    for _, v in ipairs(files) do
+        -- Solo cargamos imágenes válidas
+        if string.EndsWith(v, ".vtf") or string.EndsWith(v, ".png") then
+            AddDecalsFile(_, v, directory)
+        end
+    end
+
+    for _, v in ipairs(directories) do
+        msg("Directory: " .. v)
+        loadDecalsFiles(directory .. v)
+    end
+end
+
+loadDecalsFiles(DecalsDirectory)
 
 PrecacheParticleSystem("meteor_trail")
 PrecacheParticleSystem("volcano_trail")

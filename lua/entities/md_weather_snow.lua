@@ -39,6 +39,7 @@ function ENT:Initialize()
 			end)
 		end 
         
+        self:SpawnSnowground()
 
         setMapLight("d")
 
@@ -87,15 +88,29 @@ function ENT:OnRemove()
 end
 
 function ENT:SpawnSnowground()
-    local pos = self:GetPos() -- Cambia esto por la posición que quieras
-    local tr = util.TraceLine({
-        start = pos + Vector(0, 0, 512),
-        endpos = pos - Vector(0, 0, 512),
-        mask = MASK_SOLID_BRUSHONLY
-    })
+    local bounds = getMapBounds()
+    local minPos = Vector(bounds[2].x, bounds[2].y, 0)
+    local maxPos = Vector(bounds[1].x, bounds[1].y, 0)
 
-    if tr.Hit then
-        util.Decal("SnowFootprintLeft", tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal)
+    local stepSize = 1024
+    local traceStartZ = 10000
+    local traceLength = 20000
+
+    for x = minPos.x, maxPos.x, stepSize do
+        for y = minPos.y, maxPos.y, stepSize do
+            local startPos = Vector(x, y, traceStartZ)
+            local endPos = startPos - Vector(0, 0, traceLength)
+
+            local tr = util.TraceLine({
+                start = startPos,
+                endpos = endPos,
+                mask = MASK_SOLID,
+            })
+
+            if tr.Hit then
+                util.Decal("snow", tr.HitPos + tr.HitNormal * 0.5, tr.HitPos - tr.HitNormal * 0.5)
+            end
+        end
     end
 end
 
@@ -103,7 +118,6 @@ function ENT:Think()
     local t =  (FrameTime() / 0.1) / (66.666 / 0.1) -- tick dependant function that allows for constant think loop regardless of server tickrate
 
     if (SERVER) then
-        self:SpawnSnowground()
         self:RainEffect()
         self:NextThink(CurTime() +  t)
         return true
