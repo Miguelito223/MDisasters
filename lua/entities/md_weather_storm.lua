@@ -38,7 +38,7 @@ function ENT:Initialize()
 		end 
 
         net.Start("md_sendloopsound")
-        net.WriteString("ambient/weather/thunderstorm.wav")
+        net.WriteString("weather/rain/rain_effect.wav")
         net.Broadcast()
 
         setMapLight("d")
@@ -124,7 +124,7 @@ function ENT:OnRemove()
 		setMapLight("t")
 
         net.Start("md_stoploopsound")
-        net.WriteString("ambient/weather/thunderstorm.wav")
+        net.WriteString("weather/rain/rain_effect.wav")
         net.Broadcast()
     end
 end

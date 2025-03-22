@@ -30,7 +30,7 @@ function ENT:Initialize()
         self.Original_SkyData["DuskScale"]   = 0
 		
         net.Start("md_sendloopsound")
-        net.WriteString("ambient/weather/thunderstorm.wav")
+        net.WriteString("weather/rain/rain_effect.wav")
         net.Broadcast()
 
 		for i=0, 100 do
@@ -85,7 +85,7 @@ function ENT:OnRemove()
 		setMapLight("t")
         
         net.Start("md_stoploopsound")
-        net.WriteString("ambient/weather/thunderstorm.wav")
+        net.WriteString("weather/rain/rain_effect.wav")
         net.Broadcast()
     end
 end

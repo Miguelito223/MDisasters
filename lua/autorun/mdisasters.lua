@@ -92,6 +92,7 @@ PrecacheParticleSystem("tornado")
 PrecacheParticleSystem("volcano_explosion")
 PrecacheParticleSystem("rain_effect")
 PrecacheParticleSystem("rain_effect_ground")
+PrecacheParticleSystem("snow_effect")
 
 
 msg("MDisasters Loaded")

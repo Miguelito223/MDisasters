@@ -30,13 +30,14 @@ function Temperature()
 
 
 	local temp = mdisasters.weather.Temperature  
-    SetGlobalFloat("temperature",temp)
 	local humidity = mdisasters.weather.Humidity
 	local compensation_max = 10   -- degrees 
 	local body_heat_genK = engine.TickInterval() -- basically 1 degree Celsius per second
 	local body_heat_genMAX = 0.01/4
 	local fire_heat_emission = 50
     local plys = player.GetAll()
+
+    SetGlobalFloat("temperature", temp)
 
     local function updatevars()
         for k,v in pairs(plys) do
@@ -71,7 +72,11 @@ function Temperature()
 			if math.random(1,25) == 25 then
 				if alpha_cold != 0 then
 					
-					InflictDamage(v, v, "cold", alpha_hot + alpha_cold)
+                    local dmg = DamageInfo()
+                    dmg:SetDamage( math.random(1,25) )
+                    dmg:SetAttacker( v )
+                    dmg:SetDamageType( DMG_GENERIC )
+                    v:TakeDamageInfo(  dmg)
 					
 					v:SetWalkSpeed( v:GetWalkSpeed() - (alpha_cold + 1) )
 					v:SetRunSpeed( v:GetRunSpeed() - (alpha_cold + 1)  )
@@ -80,7 +85,11 @@ function Temperature()
 				
 				elseif alpha_hot != 0 then
 					
-					InflictDamage(v, v, "heat", alpha_hot + alpha_cold)
+                    local dmg = DamageInfo()
+                    dmg:SetDamage( math.random(1,25) )
+                    dmg:SetAttacker( v )
+                    dmg:SetDamageType( DMG_BURN  )
+                    v:TakeDamageInfo(  dmg)
 					
 					v:SetWalkSpeed( v:GetWalkSpeed() - (alpha_hot - 1) )
 					v:SetRunSpeed( v:GetRunSpeed() - (alpha_hot - 1)  )
@@ -92,11 +101,8 @@ function Temperature()
 				end
             end
 
-            if mdisasters.weather.Temperature <= 5 then
-                v.mdisasters.body.Temperature = v.mdisasters.body.Temperature + 0.001
-            elseif mdisasters.weather.Temperature >= 35 then
-                v.mdisasters.body.Temperature = v.mdisasters.body.Temperature - 0.001
-            elseif  mdisasters.weather.Temperature <= -100 then
+
+            if mdisasters.weather.Temperature <= -100 then
                 v.mdisasters.body.Temperature = v.mdisasters.body.Temperature - 0.01
             elseif mdisasters.weather.Temperature >= 100 then
                 v.mdisasters.body.Temperature = v.mdisasters.body.Temperature + 0.01
@@ -115,8 +121,9 @@ function Temperature()
             end
         end     
     end
-    Damage()
     updatevars()
+    Damage()
+
 end
 
 function Humidity()
