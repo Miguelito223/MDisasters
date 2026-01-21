@@ -74,7 +74,7 @@ function MDisasters_Temperature()
 				if alpha_cold != 0 then
 					
                     local dmg = DamageInfo()
-                    dmg:SetDamage( math.random(1,25) )
+                    dmg:SetDamage( alpha_hot + alpha_cold )
                     dmg:SetAttacker( v )
                     dmg:SetDamageType( DMG_GENERIC )
                     v:TakeDamageInfo(  dmg)
@@ -87,7 +87,7 @@ function MDisasters_Temperature()
 				elseif alpha_hot != 0 then
 					
                     local dmg = DamageInfo()
-                    dmg:SetDamage( math.random(1,25) )
+                    dmg:SetDamage( alpha_hot + alpha_cold )
                     dmg:SetAttacker( v )
                     dmg:SetDamageType( DMG_BURN  )
                     v:TakeDamageInfo(  dmg)
