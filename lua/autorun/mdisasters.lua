@@ -3,12 +3,19 @@ MDisasters.name = "MDisasters"
 MDisasters.author = "Miguelillo948"
 MDisasters.version = "0.0.4.5.2"
 
+-- ✅ Crear la convar al inicio
+if SERVER then
+    CreateConVar("MDisasters_debug_enabled", "0", FCVAR_ARCHIVE, "Activar modo debug de MDisasters")
+end
+
 local LuaDirectory = "MDisasters"
 local ParticlesDirectory = "particles/MDisasters"
 local DecalsDirectory = "materials/decals/MDisasters"
 
 function MDisasters:msg(...)
-    if not GetConVar("MDisasters_debug_enabled"):GetBool() then return end
+    -- ✅ Validar que la convar exista antes de usarla
+    if not GetConVar("MDisasters_debug_enabled") then return end
+
 
     local args = {...}
     local output = ""

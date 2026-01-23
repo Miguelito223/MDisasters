@@ -87,10 +87,12 @@ end
 
 local function MDisastersSettingsClient( CPanel )
     CreateTickboxConVariable(CPanel, "Enable Hud" ,"MDisasters_hud_enabled");
-	CreateTickboxConVariable(CPanel, "Enable Debug" ,"MDisasters_debug_enabled");
 end
 
 local function MDisastersSettingsServer( CPanel )
+	--debug
+	CreateTickboxConVariable(CPanel, "Enable Debug" ,"MDisasters_debug_enabled");
+	
 	--tornado
 	CreateTickboxConVariable(CPanel, "Enable Tornado Configuration" ,"MDisasters_tornado_enable_configuration");
 	
