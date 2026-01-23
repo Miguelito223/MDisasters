@@ -37,9 +37,17 @@ function ENT:Initialize()
         dir:Normalize()
 
         self.Direction = dir
-        self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 10000 
-        self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 10000
-        self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
+        
+        if GetConVar("MDisasters_tornado_enable_configuration"):GetBool() then
+            self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 10000 
+            self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 10000
+            self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
+        else
+            self.Radius = 10000
+            self.Force = 10000
+            self.Speed = 10
+        end
+
         self.IsTornado = true
 
         timer.Simple(GetConVar("MDisasters_tornado_time"):GetInt(), function()

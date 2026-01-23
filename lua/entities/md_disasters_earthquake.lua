@@ -26,10 +26,17 @@ function ENT:Initialize()
         net.WriteString("disasters/earthquake/earthquake_loop.wav")
         net.Broadcast()
 
-        self.ShakeIntensity = GetConVar("MDisasters_earthquake_shake_force"):GetInt()
+        if GetConVar("MDisasters_earthquake_enable_configuration"):GetBool() then
+            self.ShakeIntensity = GetConVar("MDisasters_earthquake_shake_force"):GetInt()
+            self.PushForce = GetConVar("MDisasters_earthquake_force"):GetInt()
+        else
+            self.ShakeIntensity = 150
+            self.PushForce = 1500
+        end
+        
         self.ShakeDuration = 1
         self.ShakeFreq = 5 -- frecuencia de la sacudida
-        self.PushForce = GetConVar("MDisasters_earthquake_force"):GetInt()
+        
 
 
        

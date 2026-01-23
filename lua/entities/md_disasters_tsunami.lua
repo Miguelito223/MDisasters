@@ -57,8 +57,14 @@ function ENT:Initialize()
 
         self:SetPos(spawnPos)
         self:SetAngles(velocity:Angle())
-        self.Velocity = velocity * GetConVar("MDisasters_tsunami_velocity"):GetInt()
-        self.Force = GetConVar("MDisasters_tsunami_force"):GetInt()
+
+        if GetConVar("MDisasters_tsunami_enable_configuration"):GetBool() then
+            self.Velocity = velocity * GetConVar("MDisasters_tsunami_velocity"):GetInt()
+            self.Force = GetConVar("MDisasters_tsunami_force"):GetInt()
+        else
+            self.Velocity = velocity * 5000
+            self.Force = 5000
+        end
     end
 end
 

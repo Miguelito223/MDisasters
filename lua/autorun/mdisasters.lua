@@ -1,7 +1,7 @@
 MDisasters = {}
 MDisasters.name = "MDisasters"
 MDisasters.author = "Miguelillo948"
-MDisasters.version = "0.0.4.5.1"
+MDisasters.version = "0.0.4.5.2"
 
 local LuaDirectory = "MDisasters"
 local ParticlesDirectory = "particles/MDisasters"

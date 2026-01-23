@@ -91,6 +91,8 @@ end
 
 local function MDisastersSettingsServer( CPanel )
 	--tornado
+	CreateTickboxConVariable(CPanel, "Enable Tornado Configuration" ,"MDisasters_tornado_enable_configuration");
+	
 	CreateSliderConVariable(CPanel, "Tornado Speed", 0, 10000, 0, "MDisasters_tornado_speed")
 	CreateSliderConVariable(CPanel, "Tornado Radius", 0, 10000, 0, "MDisasters_tornado_radius")
 	CreateSliderConVariable(CPanel, "Tornado Force", 0, 10000, 0, "MDisasters_tornado_force")
@@ -98,14 +100,18 @@ local function MDisastersSettingsServer( CPanel )
 	CreateSliderConVariable(CPanel, "Tornado Constrains Damage", 0, 10000, 0, "MDisasters_tornado_constraints_damage")
 
 	--earthquake
+	CreateTickboxConVariable(CPanel, "Enable Earthquake Configuration" ,"MDisasters_earthquake_enable_configuration");
 	CreateSliderConVariable(CPanel, "Earthquake Force", 0, 10000, 0, "MDisasters_earthquake_force")
 	CreateSliderConVariable(CPanel, "Earthquake Remove Time", 0, 10000, 0, "MDisasters_earthquake_time")
 	CreateSliderConVariable(CPanel, "Earthquake Shake Force", 0, 10000, 0, "MDisasters_earthquake_shake_force")
 	CreateSliderConVariable(CPanel, "Earthquake Constrains Damage", 0, 10000, 0, "MDisasters_earthquake_constraints_damage")
 
 	--volcano
+	CreateTickboxConVariable(CPanel, "Enable Volcano Configuration" ,"MDisasters_volcano_enable_configuration");
 	CreateSliderConVariable(CPanel, "Volcano Time", 0, 10000, 0, "MDisasters_volcano_time")
 
+	--tsunami
+	CreateTickboxConVariable(CPanel, "Enable Tsunami Configuration" ,"MDisasters_tsunami_enable_configuration");
 	CreateSliderConVariable(CPanel, "Tsunami Force", 0, 10000, 0, "MDisasters_tsunami_force")
 	CreateSliderConVariable(CPanel, "Tsunami Velocity", 0, 10000, 0, "MDisasters_tsunami_velocity")
 	CreateSliderConVariable(CPanel, "Tsunami offset", -10000, 10000, 0, "MDisasters_tsunami_offset")
