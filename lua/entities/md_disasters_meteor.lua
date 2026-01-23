@@ -138,9 +138,8 @@ function ENT:SetMeteoriteSkyPos()
         end
     })
 
-    if GetConVar("MDisasters_debug_enable"):GetBool() then
-        MDisasters:msg(tr.HitPos)
-    end
+    MDisasters:msg(tr.HitPos)
+
 
     -- Si el trace no golpeó nada, usar la altura máxima del skybox
     local finalPos = tr.Hit and tr.HitPos or endpos
