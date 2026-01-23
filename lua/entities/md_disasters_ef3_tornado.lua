@@ -38,12 +38,12 @@ function ENT:Initialize()
 
         self.Direction = dir
         if GetConVar("MDisasters_tornado_enable_configuration"):GetBool() then
-            self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 50000 
-            self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 50000
+            self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 8000
+            self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 8000
             self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
         else
-            self.Radius = 50000
-            self.Force = 50000
+            self.Radius = 4000
+            self.Force = 4000
             self.Speed = 10
         end
 
@@ -200,8 +200,17 @@ function ENT:Draw()
     self:DrawModel()
     
     -- Dibujar círculo de debug del radio
-    if GetConVar("MDisasters_debug_enabled"):GetBool() then
-        debugoverlay.Sphere(self:GetPos(), self.Radius, 0.1, Color(255, 0, 0, 50), false)
+    if CLIENT then
+        local convar = GetConVar("MDisasters_debug_enabled")
+        if convar and convar:GetBool() then
+            debugoverlay.Sphere(
+                self:GetPos(),           -- Posición del centro
+                self.Radius or 1000,     -- Radio de la esfera
+                0,                       -- Duración (0 = actualiza cada frame)
+                Color(255, 0, 0, 100),   -- Rojo semi-transparente
+                false                    -- No rellena
+            )
+        end
     end
 end
 

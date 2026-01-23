@@ -4,7 +4,7 @@ MDisasters.author = "Miguelillo948"
 MDisasters.version = "0.0.4.5.2"
 
 -- ✅ Crear la convar al inicio
-if SERVER then
+if SERVER or CLIENT then
     CreateConVar("MDisasters_debug_enabled", "0", FCVAR_ARCHIVE, "Activar modo debug de MDisasters")
 end
 
