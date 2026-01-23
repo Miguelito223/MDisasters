@@ -199,20 +199,6 @@ end
 
 function ENT:Draw()	
     self:DrawModel()
-    
-    -- 🔍 Dibujar círculo de debug del radio (SOLO EN CLIENTE)
-    if CLIENT then
-        local convar = GetConVar("MDisasters_debug_enabled")
-        if convar and convar:GetBool() then
-            debugoverlay.Sphere(
-                self:GetPos(),           -- Posición del centro
-                self.Radius or 1000,     -- Radio de la esfera
-                0,                       -- Duración (0 = actualiza cada frame)
-                Color(255, 0, 0, 100),   -- Rojo semi-transparente
-                false                    -- No rellena
-            )
-        end
-    end
 end
 
 function ENT:UpdateTransmitState()
