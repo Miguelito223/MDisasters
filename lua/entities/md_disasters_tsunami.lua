@@ -82,8 +82,10 @@ end
 
 -- 🌊 Empuja objetos pero sin bugs
 function ENT:Touch(ent)
-    if ent == self then return end  -- Evitar colisión consigo mismo
+    if ent == self then return end
 
+    MDisasters:msg("Tsunami golpeando: " .. ent:GetClass() .. " | Fuerza: " .. self.Force) 
+    
     local pushForce = self.Velocity:GetNormalized() * self.Force
 
     if ent:IsPlayer() or ent:IsNPC() then

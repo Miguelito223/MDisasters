@@ -43,7 +43,7 @@ function ENT:Initialize()
             self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 5000
             self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
         else
-            self.Radius = 3000
+            self.Radius = 1000
             self.Force = 6000
             self.Speed = 10
         end
@@ -198,11 +198,12 @@ end
 
 
 function ENT:Draw()	
-
-	self:DrawModel()
-
-	
-	
+    self:DrawModel()
+    
+    -- Dibujar círculo de debug del radio
+    if GetConVar("MDisasters_debug_enable"):GetBool() then
+        debugoverlay.Sphere(self:GetPos(), self.Radius, 0.1, Color(255, 0, 0, 50), false)
+    end
 end
 
 function ENT:UpdateTransmitState()

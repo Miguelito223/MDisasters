@@ -137,7 +137,10 @@ function ENT:SetMeteoriteSkyPos()
             return not ent:IsWorld() -- Ignorar estructuras que no sean el mapa
         end
     })
-    MDisasters:msg(tr.HitPos)
+
+    if GetConVar("MDisasters_debug_enable"):GetBool() then
+        MDisasters:msg(tr.HitPos)
+    end
 
     -- Si el trace no golpeó nada, usar la altura máxima del skybox
     local finalPos = tr.Hit and tr.HitPos or endpos

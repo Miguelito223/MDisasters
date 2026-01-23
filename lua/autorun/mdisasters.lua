@@ -8,6 +8,8 @@ local ParticlesDirectory = "particles/MDisasters"
 local DecalsDirectory = "materials/decals/MDisasters"
 
 function MDisasters:msg(...)
+    if not GetConVar("MDisasters_debug_enabled"):GetBool() then return end
+
     local args = {...}
     local output = ""
 

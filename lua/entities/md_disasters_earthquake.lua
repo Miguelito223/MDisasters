@@ -45,15 +45,15 @@ end
 
 function ENT:DoEarthquake()
     local pos = self:GetPos()
-
-    -- Sacude la pantalla cerca del epicentro
+    
+    -- Sacude la pantalla sin radio (afecta todo el mapa)
     util.ScreenShake(pos, self.ShakeIntensity, self.ShakeFreq, self.ShakeDuration, math.huge)
+    
 
+    MDisasters:msg("Terremoto - Intensidad: " .. self.ShakeIntensity .. " | Fuerza: " .. self.PushForce)
     for _, ent in ipairs(ents.GetAll()) do
         local dist = pos:Distance(ent:GetPos())
-
         if ent:IsPlayer() or ent:IsNPC() then
-            -- ⚡ Empuje solo horizontal (X, Y), sin levantar en Z
             local randVec = VectorRand()
             randVec.z = 0  
             local pushForce = randVec:GetNormalized() * self.PushForce

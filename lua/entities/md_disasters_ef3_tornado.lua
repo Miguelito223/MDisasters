@@ -196,8 +196,13 @@ function ENT:OnRemove()
 end
 
 
-function ENT:Draw()
-	self:DrawModel()
+function ENT:Draw()	
+    self:DrawModel()
+    
+    -- Dibujar círculo de debug del radio
+    if GetConVar("MDisasters_debug_enable"):GetBool() then
+        debugoverlay.Sphere(self:GetPos(), self.Radius, 0.1, Color(255, 0, 0, 50), false)
+    end
 end
 
 function ENT:UpdateTransmitState()
