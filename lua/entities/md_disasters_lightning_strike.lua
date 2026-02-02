@@ -47,8 +47,6 @@ function ENT:Initialize()
             end
         end
 
-        
-
         ParticleEffect("lightning_strike", endPos, Angle(0, 0, 0), self)
 
         timer.Simple(2, function()

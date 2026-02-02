@@ -8,13 +8,15 @@ function MDisasters:RegisterAllEntitiesAndWeapons()
     for _, fileName in ipairs(entityFiles) do
         if fileName:StartsWith("md_disasters") then 
             local className = fileName:gsub("%.lua$", "") -- Quitar extensión .lua
-            local displayName = className:gsub("md_", ""):gsub("_", " "):gsub("disasters", "")
-
+            local entTable = scripted_ents.GetStored(className).t
+            local displayName = entTable.PrintName or "None"
+            
             table.insert(entityClasses, { name = displayName, class = className, category = "Disasters" })
         elseif fileName:StartsWith("md_weather") then
             local className = fileName:gsub("%.lua$", "") -- Quitar extensión .lua
-            local displayName = className:gsub("md_", ""):gsub("_", " "):gsub("weather", "")
-
+            local entTable = scripted_ents.GetStored(className).t
+            local displayName = entTable.PrintName or "None"
+            
             table.insert(entityClasses, { name = displayName, class = className, category = "Weather" })
         end 
 
@@ -25,7 +27,8 @@ function MDisasters:RegisterAllEntitiesAndWeapons()
     for _, fileName in ipairs(weaponFiles) do
         if string.StartsWith(fileName, "md_weapons") then 
             local className = fileName:gsub("%.lua$", "") -- Quitar extensión .lua
-            local displayName = className:gsub("md_", ""):gsub("_", " "):gsub("weapons", "")
+            local wepTable = weapons.GetStored(className)
+            local displayName = wepTable.PrintName or "None"
 
             table.insert(weaponClasses, { name = displayName, class = className, category = "Weapons" })
         end

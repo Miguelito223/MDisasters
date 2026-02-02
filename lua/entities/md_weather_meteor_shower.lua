@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 ENT.Base = "base_anim"
-ENT.PrintName = "Meteor Shower"
+ENT.PrintName = "Meteors Shower"
 ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.Category = "MDisasters"
