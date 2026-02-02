@@ -21,7 +21,7 @@ function WindControl()
 	local wind_mod_vol  = math.Clamp( ( (local_wind-20) / 60), 0, 1) * outside_fac 		
 	local wind_str_vol  = math.Clamp( ( (local_wind-80) / 120), 0, 1) * outside_fac 	
 	
-	if LocalPlayer().MDisasters.Sounds.Wind_Heavy == nil then
+	if LocalPlayer().MDisasters.Sounds.Wind_Heavy == nil or LocalPlayer().MDisasters.Sounds.Wind_Moderate == nil or LocalPlayer().MDisasters.Sounds.Wind_Light == nil then
 		
 		
 		LocalPlayer().MDisasters.Sounds.Wind_Light        = CreateLoopedSound(LocalPlayer(), "weather/wind/wind_effect.wav")
