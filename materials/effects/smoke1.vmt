@@ -5,4 +5,5 @@
 	"$vertexalpha"				"1"
 	"$translucent"				"1"
 	"$nofog"					"1"
+	"$nocull" 					"1"
 }

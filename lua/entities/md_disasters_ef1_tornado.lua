@@ -48,6 +48,15 @@ function ENT:Initialize()
             self.Speed = 10
         end
 
+        -- Ajustar sonido según radio
+        local baseLevel = 75
+        local maxLevel = 140
+
+        local radiusFactor = math.Clamp(self.Radius / 4000, 0, 1)
+        local soundLevel = Lerp(radiusFactor, baseLevel, maxLevel)
+
+        CSPatch:SetSoundLevel(soundLevel)
+
         self.IsTornado = true
 
         timer.Simple(GetConVar("MDisasters_tornado_time"):GetInt(), function()

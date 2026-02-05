@@ -1,7 +1,7 @@
 MDisasters = {}
 MDisasters.name = "MDisasters"
 MDisasters.author = "Miguelillo948"
-MDisasters.version = "0.0.4.5.3"
+MDisasters.version = "0.0.4.5.4"
 
 -- ✅ Crear la convar al inicio
 if SERVER then
@@ -186,6 +186,7 @@ PrecacheParticleSystem("volcano_trail")
 PrecacheParticleSystem("tornado_ef1")
 PrecacheParticleSystem("tornado_ef2")
 PrecacheParticleSystem("tornado_ef3")
+PrecacheParticleSystem("tornado_wallcloud")
 PrecacheParticleSystem("volcano_explosion")
 PrecacheParticleSystem("rain_effect")
 PrecacheParticleSystem("rain_effect_ground")

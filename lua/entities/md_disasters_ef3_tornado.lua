@@ -18,6 +18,7 @@ function ENT:Initialize()
 	CSPatch:Play()
     self.Sounds = CSPatch
 
+
     if SERVER then
         self:SetModel(self.Model)
         self:SetSolid(SOLID_VPHYSICS)
@@ -46,6 +47,15 @@ function ENT:Initialize()
             self.Force = 4000
             self.Speed = 10
         end
+
+        -- Ajustar sonido según radio
+        local baseLevel = 75
+        local maxLevel = 140
+
+        local radiusFactor = math.Clamp(self.Radius / 4000, 0, 1)
+        local soundLevel = Lerp(radiusFactor, baseLevel, maxLevel)
+
+        CSPatch:SetSoundLevel(soundLevel)
 
         self.IsTornado = true
         
