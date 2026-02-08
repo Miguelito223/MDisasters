@@ -18,6 +18,18 @@ function ENT:Initialize()
 	CSPatch:Play()
     self.Sounds = CSPatch
 
+    if GetConVar("MDisasters_tornado_enable_configuration"):GetBool() then
+        self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 8000
+        self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 8000
+        self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
+    else
+        self.Radius = 4000
+        self.Force = 4000
+        self.Speed = 10
+    end
+
+    self.IsTornado = true
+
 
     if SERVER then
         self:SetModel(self.Model)
@@ -38,15 +50,7 @@ function ENT:Initialize()
         dir:Normalize()
 
         self.Direction = dir
-        if GetConVar("MDisasters_tornado_enable_configuration"):GetBool() then
-            self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 8000
-            self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 8000
-            self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
-        else
-            self.Radius = 4000
-            self.Force = 4000
-            self.Speed = 10
-        end
+
 
         -- Ajustar sonido según radio
         local baseLevel = 75
@@ -57,7 +61,7 @@ function ENT:Initialize()
 
         CSPatch:SetSoundLevel(soundLevel)
 
-        self.IsTornado = true
+        
         
         timer.Simple(GetConVar("MDisasters_tornado_time"):GetInt(), function()
             if not self:IsValid() then return end
@@ -204,6 +208,28 @@ function ENT:OnRemove()
     if self.Sounds then self.Sounds:Stop() end
     self:StopParticles()
 end
+
+hook.Add("PostDrawTranslucentRenderables", "MDisasters_TornadoRadiusDebug", function()
+    for _, ent in ipairs(ents.FindByClass("md_*")) do
+        if not IsValid(ent) then continue end
+        if not ent.IsTornado then continue end
+        if not GetConVar("MDisasters_debug_draw_enabled"):GetBool() then continue end
+
+    
+        local radius = ent.Radius or 1000
+        local pos = ent:GetPos()
+
+        render.SetColorMaterial()
+        render.DrawWireframeSphere(
+            pos,
+            radius,
+            32,
+            32,
+            Color(255, 0, 0),
+            true
+        )
+    end
+end)
 
 
 function ENT:Draw()	

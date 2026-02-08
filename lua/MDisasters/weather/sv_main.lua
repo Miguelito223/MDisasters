@@ -163,23 +163,18 @@ function MDisasters_Wind()
         if ent:IsValid() then
             local phys = ent:GetPhysicsObject()
             if phys:IsValid() then
-                if Force >= 25 then
-                    -- Solo afectar props si están al aire libre
-                    if isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
-                        phys:AddVelocity(windVec)
-                        
-                        if math.random(0,25) == 25 then
-                            constraint.RemoveAll(ent)
-                            phys:Wake()
-                            phys:EnableMotion(true)
-                        end
-                    end
-                else
-                    -- Solo afectar props si están al aire libre
-                    if isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
-                        phys:AddVelocity(windVec)
-                    end
-                end 
+                -- Solo afectar props si están al aire libre
+                if isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
+                    phys:AddVelocity(windVec)
+                end
+
+                wind_mult = Force / 100
+
+                if HitChance(0.01 + wind_mult) then
+                    constraint.RemoveAll(ent)
+                    phys:Wake()
+                    phys:EnableMotion(true)
+                end
             end
             if ent:IsNPC() then
                 if isOutdoor(ent) and !IsSomethingBlockingWind(ent) then

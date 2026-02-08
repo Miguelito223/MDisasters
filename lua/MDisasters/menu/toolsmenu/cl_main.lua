@@ -87,6 +87,7 @@ end
 
 local function MDisastersSettingsClient( CPanel )
     CreateTickboxConVariable(CPanel, "Enable Hud" ,"MDisasters_hud_enabled");
+	CreateTickboxConVariable(CPanel, "Enable Debug Draw" ,"MDisasters_debug_draw_enabled");
 end
 
 local function MDisastersSettingsServer( CPanel )
