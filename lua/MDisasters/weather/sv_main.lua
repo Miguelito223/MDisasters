@@ -144,6 +144,21 @@ function MDisasters_Wind()
     SetGlobalVector("MDisasters_wind_speed", Force)
     SetGlobalVector("MDisasters_wind_dir", Direction)
 
+    local function WindUnweld(ent)
+        if not IsValid(ent) then return end
+        local phys = ent:GetPhysicsObject()
+        if not IsValid(phys) then return end
+        
+        local wind_mult = (math.Clamp(Force,200, 256) -200) / 10  -- Ajusta este valor para controlar la fuerza del viento necesaria para romper cosas
+
+        if HitChance(0.01 + wind_mult ) then
+            phys:EnableMotion(true)
+            phys:Wake()
+            constraint.RemoveAll(ent)
+        end
+    end
+
+
     for _, ply in ipairs(player.GetAll()) do
        
         local local_wind = Force
@@ -168,13 +183,7 @@ function MDisasters_Wind()
                     phys:AddVelocity(windVec)
                 end
 
-                wind_mult = Force / 100
-
-                if HitChance(0.01 + wind_mult) then
-                    constraint.RemoveAll(ent)
-                    phys:Wake()
-                    phys:EnableMotion(true)
-                end
+                WindUnweld(ent)
             end
             if ent:IsNPC() then
                 if isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
