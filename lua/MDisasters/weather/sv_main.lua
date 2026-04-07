@@ -158,15 +158,16 @@ function MDisasters_Wind()
         end
     end
 
+    if Force <= 0 then return end
 
     for _, ply in ipairs(player.GetAll()) do
-       
+
         local local_wind = Force
         
         if !isOutdoor(ply) or IsSomethingBlockingWind(ply) then local_wind = 0 end
         
         local local_windVec = Direction:GetNormalized() * local_wind
-         
+
         ply.MDisasters.Area.Local_wind = local_wind
         ply:SetNWFloat("MDisasters_BodyWind", local_wind)
         ply:SetVelocity(local_windVec)
@@ -175,7 +176,7 @@ function MDisasters_Wind()
 
     end
     for _, ent in ipairs(ents) do
-        if ent:IsValid() then
+        if ent:IsValid() and isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
             local phys = ent:GetPhysicsObject()
             if phys:IsValid() then
                 -- Solo afectar props si están al aire libre

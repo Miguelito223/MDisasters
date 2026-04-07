@@ -47,12 +47,34 @@ function ENT:Initialize()
             end
         end
 
-        ParticleEffect("lightning_strike", endPos, Angle(0, 0, 0), self)
-
         timer.Simple(2, function()
             if IsValid(self) then self:Remove() end
         end)
         
+    end
+
+    if CLIENT then
+        self.Particle = CreateParticleSystem(self, "lightning_strike", PATTACH_ABSORIGIN_FOLLOW)
+
+        if IsValid(self.Particle) then
+            
+            local startPos = self:GetNWVector("StartPos")
+            local endPos = self:GetNWVector("EndPos")
+
+            -- Offset aleatorio (forma del rayo)
+            local randomOffset = Vector(
+                math.random(-2000,2000),
+                math.random(-2000,2000),
+                math.random(-2000,2000)
+            )
+
+            -- CP0 = inicio del rayo
+            self.Particle:SetControlPoint(0, startPos)
+            
+
+            -- CP1 = final con variación
+            self.Particle:SetControlPoint(1, endPos + randomOffset)
+        end
     end
 end
 
