@@ -1,7 +1,7 @@
 MDisasters = {}
 MDisasters.name = "MDisasters"
 MDisasters.author = "Miguelillo948"
-MDisasters.version = "0.0.4.5.6"
+MDisasters.version = "0.0.4.5.7"
 
 -- ✅ Crear la convar al inicio
 if SERVER then

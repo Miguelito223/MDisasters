@@ -151,7 +151,7 @@ function MDisasters_Wind()
         
         local wind_mult = (math.Clamp(Force,200, 256) -200) / 10  -- Ajusta este valor para controlar la fuerza del viento necesaria para romper cosas
 
-        if HitChance(0.01 + wind_mult ) then
+        if MDisasters:HitChance(0.01 + wind_mult ) then
             phys:EnableMotion(true)
             phys:Wake()
             constraint.RemoveAll(ent)
@@ -164,7 +164,7 @@ function MDisasters_Wind()
 
         local local_wind = Force
         
-        if !isOutdoor(ply) or IsSomethingBlockingWind(ply) then local_wind = 0 end
+        if !MDisasters:isOutdoor(ply) or MDisasters:IsSomethingBlockingWind(ply) then local_wind = 0 end
         
         local local_windVec = Direction:GetNormalized() * local_wind
 
@@ -176,18 +176,18 @@ function MDisasters_Wind()
 
     end
     for _, ent in ipairs(ents) do
-        if ent:IsValid() and isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
+        if ent:IsValid() and MDisasters:isOutdoor(ent) and !MDisasters:IsSomethingBlockingWind(ent) then
             local phys = ent:GetPhysicsObject()
             if phys:IsValid() then
                 -- Solo afectar props si están al aire libre
-                if isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
+                if MDisasters:isOutdoor(ent) and !MDisasters:IsSomethingBlockingWind(ent) then
                     phys:AddVelocity(windVec)
                 end
 
                 WindUnweld(ent)
             end
             if ent:IsNPC() then
-                if isOutdoor(ent) and !IsSomethingBlockingWind(ent) then
+                if MDisasters:isOutdoor(ent) and !MDisasters:IsSomethingBlockingWind(ent) then
                     ent:SetVelocity(windVec)  
                 end      
             end     

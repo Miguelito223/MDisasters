@@ -11,7 +11,7 @@ ENT.Model = "models/disasters/tsunami/tsunami.mdl"
 
 function ENT:Initialize()
     if CLIENT then
-        LocalPlayer().MDisasters.Sounds.tsunami = CreateLoopedSound(LocalPlayer(), "disasters/water/tsunami_loop.wav")
+        LocalPlayer().MDisasters.Sounds.tsunami = MDisasters:CreateLoopedSound(LocalPlayer(), "disasters/water/tsunami_loop.wav")
         LocalPlayer().MDisasters.Sounds.tsunami:Play()
         LocalPlayer().MDisasters.Sounds.tsunami:SetSoundLevel(100)
     end

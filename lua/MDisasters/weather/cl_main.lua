@@ -24,9 +24,9 @@ function WindControl()
 	if LocalPlayer().MDisasters.Sounds.Wind_Heavy == nil or LocalPlayer().MDisasters.Sounds.Wind_Moderate == nil or LocalPlayer().MDisasters.Sounds.Wind_Light == nil then
 		
 		
-		LocalPlayer().MDisasters.Sounds.Wind_Light        = CreateLoopedSound(LocalPlayer(), "weather/wind/wind_effect.wav")
-		LocalPlayer().MDisasters.Sounds.Wind_Moderate   = CreateLoopedSound(LocalPlayer(), "weather/wind/wind_effect.wav")
-		LocalPlayer().MDisasters.Sounds.Wind_Heavy         = CreateLoopedSound(LocalPlayer(), "weather/wind/wind_effect.wav")
+		LocalPlayer().MDisasters.Sounds.Wind_Light        = MDisasters:CreateLoopedSound(LocalPlayer(), "weather/wind/wind_effect.wav")
+		LocalPlayer().MDisasters.Sounds.Wind_Moderate   = MDisasters:CreateLoopedSound(LocalPlayer(), "weather/wind/wind_effect.wav")
+		LocalPlayer().MDisasters.Sounds.Wind_Heavy         = MDisasters:CreateLoopedSound(LocalPlayer(), "weather/wind/wind_effect.wav")
 		
 		LocalPlayer().MDisasters.Sounds.Wind_Light:ChangeVolume(0, 0)
 		LocalPlayer().MDisasters.Sounds.Wind_Moderate:ChangeVolume(0, 0)
