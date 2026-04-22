@@ -28,14 +28,12 @@ function ENT:Initialize()
         else
             self.EruptTime = 200
         end
-    end
 
-    timer.Create("Lava_Erupt",  self.EruptTime, 0, function()
-        if !self:IsValid() then return end
-        self:VolcanoErupt() 
-    end)
+        timer.Create("Lava_Erupt",  self.EruptTime, 0, function()
+            if !self:IsValid() then return end
+            self:VolcanoErupt() 
+        end)
 
-    if (SERVER) then
         self:SetModel( self.Model )
 		self:PhysicsInit( SOLID_VPHYSICS )
 		self:SetSolid( SOLID_VPHYSICS )
