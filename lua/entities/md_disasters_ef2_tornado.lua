@@ -17,15 +17,17 @@ function ENT:Initialize()
     CSPatch = CreateSound(self, sound)
 	CSPatch:Play()
     self.Sounds = CSPatch
-
-    if GetConVar("MDisasters_tornado_enable_configuration"):GetBool() then
-        self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 4000
-        self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 4000
-        self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
-    else
-        self.Radius = 2000
-        self.Force = 2000
-        self.Speed = 10
+    
+    if SERVER then
+        if GetConVar("MDisasters_tornado_enable_configuration"):GetBool() then
+            self.Radius = GetConVar("MDisasters_tornado_radius"):GetInt() or 4000
+            self.Force = GetConVar("MDisasters_tornado_force"):GetInt() or 4000
+            self.Speed = GetConVar("MDisasters_tornado_speed"):GetInt() or 10
+        else
+            self.Radius = 2000
+            self.Force = 2000
+            self.Speed = 10
+        end
     end
 
     self.IsTornado = true
