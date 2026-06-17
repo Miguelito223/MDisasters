@@ -29,7 +29,7 @@ end)
 
 net.Receive("md_VersionCheck", function()
 	local latestVersion = net.ReadString()
-	MDisasters:msg("Last Version: " .. latestVersion)
+	MDisasters.msg("Last Version: " .. latestVersion)
 end)
 
 net.Receive("md_stopsound", function()

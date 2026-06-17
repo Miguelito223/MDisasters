@@ -29,7 +29,7 @@ function ENT:Initialize()
         -- Obtener los límites del mapa
         local bounds = MDisasters_getMapBounds()
         if not bounds then
-            MDisasters:msg("Error: Límites del mapa inválidos.")
+            MDisasters.msg("Error: Límites del mapa inválidos.")
             self:Remove()
             return
         end
@@ -84,7 +84,7 @@ end
 function ENT:Touch(ent)
     if ent == self then return end
 
-    MDisasters:msg("Tsunami golpeando: " .. ent:GetClass() .. " | Fuerza: " .. self.Force) 
+    MDisasters.msg("Tsunami golpeando: " .. ent:GetClass() .. " | Fuerza: " .. self.Force) 
     
     local pushForce = self.Velocity:GetNormalized() * self.Force
 

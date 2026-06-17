@@ -50,7 +50,7 @@ function ENT:DoEarthquake()
     util.ScreenShake(pos, self.ShakeIntensity, self.ShakeFreq, self.ShakeDuration, math.huge)
     
 
-    MDisasters:msg("Terremoto - Intensidad: " .. self.ShakeIntensity .. " | Fuerza: " .. self.PushForce)
+    MDisasters.msg("Terremoto - Intensidad: " .. self.ShakeIntensity .. " | Fuerza: " .. self.PushForce)
     for _, ent in ipairs(ents.GetAll()) do
         local dist = pos:Distance(ent:GetPos())
         if ent:IsPlayer() or ent:IsNPC() then

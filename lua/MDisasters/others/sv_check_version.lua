@@ -1,32 +1,23 @@
-local VERSION_CHECK_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id=3447089470&tscn=1743507822"  -- URL del archivo con la versión
-
-function MDisasters:CheckForUpdates()
-    http.Fetch(VERSION_CHECK_URL,
-        function(body, len, headers, code)
-            if code == 200 then
-                -- Buscar la versión en el texto usando una expresión regular
-                local latestVersion = string.match(body, "actual version:?%s*v?(%d+%.%d+%.%d+%.?%d*)")  -- Encuentra la primera secuencia de números y puntos, opcionalmente precedida por 'v'
-                if latestVersion then
-                    if latestVersion ~= MDisasters.version then
-                        MDisasters:msg("Nueva versión disponible: " .. latestVersion .. " (Actualmente: " .. MDisasters.version .. ")")
-                        net.Start("md_VersionCheck")
-                        net.WriteString(latestVersion)
-                        net.Broadcast()
-                    else
-                        MDisasters:msg("MDisasters está actualizado.")
-                    end
-                else
-                    MDisasters:error("No se pudo extraer la versión del archivo.")
-                end
-            else
-                MDisasters:error("Error al comprobar la versión (Código HTTP: " .. code .. ")")
-            end
-        end,
-        function(error)
-            MDisasters:error("Falló la comprobación de versión: " .. error)
-        end
-    )
+-- Checks the workshop page for version number.
+local function RunCheck()
+    http.Fetch(MDisasters.WorkShopURL, function(code)
+        local lV = tonumber(string.match(code, "Version:(.-)<"))
+        if not lV then return end -- Unable to locate last version
+        if MDisasters.Version >= lV then return end
+        MDisasters.msg("Version " .. lV .. " is out!")
+        cookie.Set("md_nextv", lV)
+    end)
 end
-
-hook.Add("Initialize", "md_CheckVersion", function() MDisasters:CheckForUpdates() end)
-timer.Create("md_VersionCheckTimer", 3600, 0, function() MDisasters:CheckForUpdates() end) -- Verifica cada hora
+local function RunLogic()
+    -- Check if a newer version is out
+    local lV = cookie.GetNumber("md_nextv", MDisasters.Version)
+    if cookie.GetNumber("md_nextvcheck", 0) > os.time() then
+        if lV > MDisasters.Version then
+            MDisasters.msg("Version " .. lV .. " is out!")
+        end
+    else
+        RunCheck()
+        cookie.Set("md_nextvcheck", os.time() + 129600) -- Check in 1½ day
+    end
+end
+hook.Add("PlayerInitialSpawn", "MDisasters_checkversion", RunLogic)

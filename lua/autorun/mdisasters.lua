@@ -1,7 +1,7 @@
 MDisasters = {}
-MDisasters.name = "MDisasters"
-MDisasters.author = "Miguelillo948"
-MDisasters.version = "0.0.4.5.6"
+MDisasters.Name = "MDisasters"
+MDisasters.Author = "Miguelillo948"
+MDisasters.Version = "0.456"
 
 -- ✅ Crear la convar al inicio
 if SERVER then
@@ -12,7 +12,7 @@ local LuaDirectory = "MDisasters"
 local ParticlesDirectory = "particles/MDisasters"
 local DecalsDirectory = "materials/decals/MDisasters"
 
-function MDisasters:msg(...)
+function MDisasters.msg(...)
     -- ✅ Validar que la convar exista antes de usarla
     if not GetConVar("MDisasters_debug_enabled") then return end
 
@@ -41,7 +41,7 @@ function MDisasters:msg(...)
     MsgC(prefixColor, "[MDisasters][Debug] ", Color(255, 255, 255), output .. "\n")
 end
 
-function MDisasters:error(...)
+function MDisasters.error(...)
     local args = {...}
     local output = ""
 
@@ -70,89 +70,89 @@ end
 
 
 
-function MDisasters:AddLuaFile(File, directory)
+function MDisasters.AddLuaFile(File, directory)
     local prefix = string.lower(File)
 
     if prefix:StartWith("sv_") or prefix:StartWith("_sv_") then
         if SERVER then
             include(directory .. File)
-            MDisasters:msg("Server Include file: " .. File)
+            MDisasters.msg("Server Include file: " .. File)
         end
     elseif prefix:StartWith("sh_") or prefix:StartWith("_sh_") then
         if SERVER then
             AddCSLuaFile(directory .. File)
-            MDisasters:msg("Shared ADDC file: " .. File)
+            MDisasters.msg("Shared ADDC file: " .. File)
         end
         if not SERVER or not CLIENT then
             include(directory .. File)
-            MDisasters:msg("Shared Include file: " .. File)
+            MDisasters.msg("Shared Include file: " .. File)
         end
     elseif prefix:StartWith("cl_") or prefix:StartWith("_cl_") then
         if SERVER then
             AddCSLuaFile(directory .. File)
-            MDisasters:msg("Client ADDC file: " .. File)
+            MDisasters.msg("Client ADDC file: " .. File)
         elseif CLIENT then
             include(directory .. File)
-            MDisasters:msg("Client Include file: " .. File)
+            MDisasters.msg("Client Include file: " .. File)
         end
     end
 end
 
 
 
-function MDisasters:LoadLuaFiles(directory)
+function MDisasters.LoadLuaFiles(directory)
     directory = directory .. "/"
 
     local files, directories = file.Find(directory .. "*", "LUA")
 
     for _, v in ipairs(files) do
         if string.EndsWith(v, ".lua") then
-            MDisasters:AddLuaFile(v, directory)
+            MDisasters.AddLuaFile(v, directory)
         end
     end
 
     for _, v in ipairs(directories) do
-        MDisasters:msg("Included Directory: " .. v)
-        MDisasters:LoadLuaFiles(directory .. v)
+        MDisasters.msg("Included Directory: " .. v)
+        MDisasters.LoadLuaFiles(directory .. v)
     end
 end
 
 
-MDisasters:LoadLuaFiles(LuaDirectory)
+MDisasters.LoadLuaFiles(LuaDirectory)
  
-function MDisasters:AddParticlesFile( File, directory )
+function MDisasters.AddParticlesFile( File, directory )
 	game.AddParticles(directory .. File)
-    MDisasters:msg("Added File: " .. File)
+    MDisasters.msg("Added File: " .. File)
 end
 
-function MDisasters:loadParticles( directory )
+function MDisasters.loadParticles( directory )
 	directory = directory .. "/"
 
 	local files, directories = file.Find( directory .. "*", "THIRDPARTY" )
 
 	for _, v in ipairs( files ) do
 		if string.EndsWith( v, ".pcf" ) then
-			MDisasters:AddParticlesFile( v, directory )
+			MDisasters.AddParticlesFile( v, directory )
 		end
 	end
 
 	for _, v in ipairs( directories ) do
-		MDisasters:msg("Included Directory: " .. v)
-		MDisasters:loadParticles( directory .. v )
+		MDisasters.msg("Included Directory: " .. v)
+		MDisasters.loadParticles( directory .. v )
 	end
 end
 
 
-MDisasters:loadParticles( ParticlesDirectory )
+MDisasters.loadParticles( ParticlesDirectory )
 
-function MDisasters:AddDecalsFile(Key, File, directory)
+function MDisasters.AddDecalsFile(Key, File, directory)
     -- Extraemos el nombre base, ignorando cualquier número al final y la extensión
     local baseName = File:match("(.+)_?%d*%.")  -- Ahora esta expresión regular también captura casos con guiones bajos o sin ellos y elimina los números
 
     local decalPath = "decals/MDisasters/" .. baseName
     
     -- Imprime el decal cargado
-    MDisasters:msg("Adding decal: " .. decalPath)
+    MDisasters.msg("Adding decal: " .. decalPath)
     
     -- Agregar decal
     game.AddDecal(baseName, decalPath)
@@ -160,7 +160,7 @@ function MDisasters:AddDecalsFile(Key, File, directory)
     -- Puedes aplicar más lógica para manejar diferentes tipos de decals si es necesario
 end
 
-function MDisasters:loadDecalsFiles(directory)
+function MDisasters.loadDecalsFiles(directory)
     directory = directory .. "/"
 
     local files, directories = file.Find(directory .. "*", "THIRDPARTY")
@@ -168,17 +168,17 @@ function MDisasters:loadDecalsFiles(directory)
     for _, v in ipairs(files) do
         -- Solo cargamos imágenes válidas
         if string.EndsWith(v, ".vtf") or string.EndsWith(v, ".png") then
-            MDisasters:AddDecalsFile(_, v, directory)
+            MDisasters.AddDecalsFile(_, v, directory)
         end
     end
 
     for _, v in ipairs(directories) do
-        MDisasters:msg("Directory: " .. v)
-        MDisasters:loadDecalsFiles(directory .. v)
+        MDisasters.msg("Directory: " .. v)
+        MDisasters.loadDecalsFiles(directory .. v)
     end
 end
 
-MDisasters:loadDecalsFiles( DecalsDirectory )
+MDisasters.loadDecalsFiles( DecalsDirectory )
 
 PrecacheParticleSystem("meteor_trail")
 PrecacheParticleSystem("volcano_trail")
@@ -193,4 +193,4 @@ PrecacheParticleSystem("snow_effect")
 PrecacheParticleSystem("sand_effect")
 PrecacheParticleSystem("lightning_strike")
 
-MDisasters:msg("MDisasters Loaded")
+MDisasters.msg("MDisasters Loaded")

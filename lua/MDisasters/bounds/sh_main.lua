@@ -1,30 +1,30 @@
 -- Verifica si el mapa está registrado
 function MDisasters_IsMapRegistered()
     local worldEnts = ents.FindByClass("worldspawn")
-    MDisasters:msg("Worldspawn entities found: " .. #worldEnts)
+    MDisasters.msg("Worldspawn entities found: " .. #worldEnts)
 
     return #worldEnts > 0
 end
 
 function MDisasters_getMapBounds()
     if not MDisasters_IsMapRegistered() then
-        MDisasters:error("Este mapa no tiene límites registrados.")
+        MDisasters.error("Este mapa no tiene límites registrados.")
         return nil
     end
 
     -- Obtener límites del mundo
     local minVector, maxVector = game.GetWorld():GetModelBounds()
-    MDisasters:msg("Límites: Min " .. tostring(minVector) .. " | Max " .. tostring(maxVector))
+    MDisasters.msg("Límites: Min " .. tostring(minVector) .. " | Max " .. tostring(maxVector))
 
     if not minVector or not maxVector then
-        MDisasters:error("GetModelBounds() devolvió valores nulos.")
+        MDisasters.error("GetModelBounds() devolvió valores nulos.")
         return nil
     end
 
     -- Obtener el primer "info_player_start" en el mapa
     local playerStart = ents.FindByClass("info_player_start")[1]
     if not playerStart then
-        MDisasters:error("No se encontró un info_player_start en el mapa.")
+        MDisasters.error("No se encontró un info_player_start en el mapa.")
         return { minVector, maxVector, nil}
     end
 
@@ -35,7 +35,7 @@ function MDisasters_getMapBounds()
     local traceDistance = 1000  -- Distancia suficientemente larga para alcanzar el suelo
     local endPos = startPos - Vector(0, 0, traceDistance)  -- Desplazar hacia abajo
 
-    MDisasters:msg("Posición de info_player_start: " .. tostring(startPos))
+    MDisasters.msg("Posición de info_player_start: " .. tostring(startPos))
 
     -- Hacer un trace desde el "info_player_start" hacia abajo
     local traceParams = {
@@ -49,11 +49,11 @@ function MDisasters_getMapBounds()
     -- Si el trazo detecta algo, usar esa posición como el suelo
     local groundPosition = traceResult.HitPos
     if not groundPosition then
-        MDisasters:error("No se encontró un suelo bajo el info_player_start.") 
+        MDisasters.error("No se encontró un suelo bajo el info_player_start.") 
         return { minVector, maxVector, nil}
     end
     
-    MDisasters:msg("Posición del suelo detectada en: " .. tostring(groundPosition))
+    MDisasters.msg("Posición del suelo detectada en: " .. tostring(groundPosition))
 
     return { minVector, maxVector, groundPosition }
 end
@@ -62,7 +62,7 @@ end
 
 function MDisasters_getMapCeiling()
     if not MDisasters_IsMapRegistered() then 
-        MDisasters:error("This map has no Ceiling") 
+        MDisasters.error("This map has no Ceiling") 
         return nil 
     end
 
@@ -72,7 +72,7 @@ end
 -- Obtén la caja del cielo del mapa
 function MDisasters_getMapSkyBox()
     if not MDisasters_IsMapRegistered() then 
-        MDisasters:error("This map has no SkyBox") 
+        MDisasters.error("This map has no SkyBox") 
         return nil 
     end 
 
@@ -87,7 +87,7 @@ end
 -- Obtén la posición central del mapa
 function MDisasters_getMapCenterPos()
     if not MDisasters_IsMapRegistered() then 
-        MDisasters:error("This map has no CenterPos") 
+        MDisasters.error("This map has no CenterPos") 
         return nil 
     end
 
@@ -101,7 +101,7 @@ end
 -- Obtén la posición central del suelo del mapa
 function MDisasters_getMapCenterFloorPos()
     if not MDisasters_IsMapRegistered() then 
-        MDisasters:error("This map has no FloorPos") 
+        MDisasters.error("This map has no FloorPos") 
         return nil 
     end
 

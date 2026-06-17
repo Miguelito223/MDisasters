@@ -1,5 +1,5 @@
 -- 📌 Función para registrar todas las entidades y armas en el menú de MDisasters
-function MDisasters:RegisterAllEntitiesAndWeapons()
+function MDisasters.RegisterAllEntitiesAndWeapons()
     local entityClasses = {}
     local weaponClasses = {}
 
@@ -44,10 +44,10 @@ function MDisasters:RegisterAllEntitiesAndWeapons()
         AddMDisastersSpawn(wep.name, wep.class, wep.category, false)
     end
 
-    MDisasters:msg("Se han registrado automáticamente " .. #entityClasses .. " entidades y " .. #weaponClasses .. " armas en el menú.")
+    MDisasters.msg("Se han registrado automáticamente " .. #entityClasses .. " entidades y " .. #weaponClasses .. " armas en el menú.")
 end
 
 -- 📌 Ejecutar el registro en la carga del servidor
 hook.Add("Initialize", "MDisasters_AutoRegister", function()
-    MDisasters:RegisterAllEntitiesAndWeapons()
+    MDisasters.RegisterAllEntitiesAndWeapons()
 end)

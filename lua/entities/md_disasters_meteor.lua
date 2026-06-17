@@ -138,7 +138,7 @@ function ENT:SetMeteoriteSkyPos()
         end
     })
 
-    MDisasters:msg(tr.HitPos)
+    MDisasters.msg(tr.HitPos)
 
 
     -- Si el trace no golpeó nada, usar la altura máxima del skybox
