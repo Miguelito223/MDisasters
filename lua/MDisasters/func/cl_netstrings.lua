@@ -1,6 +1,6 @@
 net.Receive("md_clparticles", function()
 	local effect = net.ReadString()
-	local angle  = convert_VectorToAngle(-GetGlobalVector("MDisasters_wind_dir"))
+	local angle  = MDisasters:convert_VectorToAngle(-GetGlobalVector("MDisasters_wind_dir"))
 	ParticleEffect( effect, LocalPlayer():GetPos(), angle, nil )
 end)
 
@@ -10,7 +10,7 @@ net.Receive("md_clParticles_ground", function()
 	end
 
 	local effect = net.ReadString()
-	local angle  = convert_VectorToAngle(-GetGlobalVector("MDisasters_wind_dir"))
+	local angle  = MDisasters:convert_VectorToAngle(-GetGlobalVector("MDisasters_wind_dir"))
 	ParticleEffect( effect, LocalPlayer():GetPos(), angle, nil )
 
 end)
@@ -87,11 +87,11 @@ end)
 
 net.Receive("md_sendloopsound", function()
 	local name = net.ReadString()
-	CreateLoopedSound(LocalPlayer(), name)
+	MDisasters:CreateLoopedSound(LocalPlayer(), name)
 end)
 
 net.Receive("md_stoploopsound", function()
 
 	local name = net.ReadString()
-	StopLoopedSound(LocalPlayer(), name)
+	MDisasters:StopLoopedSound(LocalPlayer(), name)
 end)
