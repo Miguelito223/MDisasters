@@ -1,4 +1,4 @@
-function MDisasters:CreateLoopedSound(client, sound)
+function MDisasters.CreateLoopedSound(client, sound)
 	local sound = Sound(sound)
 
 	CSPatch = CreateSound(client, sound)
@@ -7,8 +7,8 @@ function MDisasters:CreateLoopedSound(client, sound)
 	
 end
 
-function MDisasters:StopLoopedSound(client, sound)
-	CSPatch = MDisasters:CreateLoopedSound(client, sound)
+function MDisasters.StopLoopedSound(client, sound)
+	CSPatch = MDisasters.CreateLoopedSound(client, sound)
 	CSPatch:Stop()
 	return CSPatch
 	

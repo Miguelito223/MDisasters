@@ -1,4 +1,4 @@
-function MDisasters:setMapLight(light)
+function MDisasters.setMapLight(light)
 	local light_env = ents.FindByClass("light_environment")[1]
 	
     if light_env != nil then 
@@ -20,14 +20,14 @@ function MDisasters:setMapLight(light)
 end
 
 
-function MDisasters:GetLightLevel(player)
+function MDisasters.GetLightLevel(player)
 
     net.Start("md_ambientlight")
     net.Send(player)
     return player.AmbientLight
 end
 
-function MDisasters:paintSky_Fade(data_to, fraction) -- fade from one skypaint setting to another
+function MDisasters.paintSky_Fade(data_to, fraction) -- fade from one skypaint setting to another
 
     local self          = ents.FindByClass("env_skypaint")[1]
 
@@ -90,7 +90,7 @@ function MDisasters:paintSky_Fade(data_to, fraction) -- fade from one skypaint s
 
 end
 
-function MDisasters:isOutdoor(ent)
+function MDisasters.isOutdoor(ent)
     local traceData = {}
     traceData.start = ent:GetPos()
     traceData.endpos = ent:GetPos() + Vector(0, 0, 48000)  -- 1000 units hacia arriba
@@ -111,7 +111,7 @@ function MDisasters:isOutdoor(ent)
 end
 
 
-function MDisasters:IsSomethingBlockingWind(entity)
+function MDisasters.IsSomethingBlockingWind(entity)
 
 
 	local tr = util.TraceLine( {

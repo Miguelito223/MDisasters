@@ -8,7 +8,7 @@ ENT.Category = "MDisasters"
 
 function ENT:Initialize()
     if CLIENT then
-        LocalPlayer().MDisasters.Sounds.rain = MDisasters:CreateLoopedSound(LocalPlayer(), "weather/rain/rain_effect.wav")
+        LocalPlayer().MDisasters.Sounds.rain = MDisasters.CreateLoopedSound(LocalPlayer(), "weather/rain/rain_effect.wav")
         LocalPlayer().MDisasters.Sounds.rain:Play()
     end  
 
@@ -36,12 +36,12 @@ function ENT:Initialize()
 		for i=0, 100 do
 			timer.Simple(i/100, function()
 				if !self:IsValid() then return  end
-				MDisasters:paintSky_Fade(self.Original_SkyData, 0.05)
+				MDisasters.paintSky_Fade(self.Original_SkyData, 0.05)
 			end)
 		end 
 
 
-        MDisasters:setMapLight("d")
+        MDisasters.setMapLight("d")
 
         self:SetNoDraw(true)
 
@@ -52,7 +52,7 @@ end
 
 function ENT:RainEffect()
     for _, ply in ipairs(player.GetAll()) do
-        if MDisasters:isOutdoor(ply) then
+        if MDisasters.isOutdoor(ply) then
             net.Start("md_clparticles")
             net.WriteString("rain_effect")
             net.Send(ply)
@@ -127,11 +127,11 @@ function ENT:OnRemove()
 
 		for i=0, 40 do
 			timer.Simple(i/100, function()
-				MDisasters:paintSky_Fade(Reset_SkyData,0.05)
+				MDisasters.paintSky_Fade(Reset_SkyData,0.05)
 			end)
 		end
 
-		MDisasters:setMapLight("t")
+		MDisasters.setMapLight("t")
 
         net.Start("md_stoploopsound")
         net.WriteString("weather/rain/rain_effect.wav")
