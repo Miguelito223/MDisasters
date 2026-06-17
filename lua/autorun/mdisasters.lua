@@ -1,7 +1,7 @@
 MDisasters = {}
 MDisasters.Name = "MDisasters"
 MDisasters.Author = "Miguelillo948"
-MDisasters.Version = "0.457"
+MDisasters.Version = "0.458"
 
 -- ✅ Crear la convar al inicio
 if SERVER then
